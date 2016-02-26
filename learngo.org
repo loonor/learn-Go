@@ -1,5 +1,18 @@
 #+TITLE: Go语言开发教程
-
+*目录*
+[[GO语言基础]]
+[[函数]]
+[[面向对象编程]]
+[[多线程]]
+[[日期与定时器]]
+[[文件操作]]
+[[JSON与XML解析]]
+[[MySQL数据库操作]]
+[[反射]]
+[[实现一个自己的ORM]]
+[[TCP与UDP网络编程]]
+[[WEB编程]]
+#<<GO语言基础>>
 ** GO语言基础
 *** 第一个Go程序
     #+begin_src go
@@ -1799,4 +1812,70 @@ func HandleRequest(w http.ResponseWriter, r *http.Request) {
 }
 #+END_SRC
 编译运行,打开浏览器:http://127.0.0.1:8888/test
+
 [[./firstweb.png]]
+*** URL参数与Form表单处理
+http.Request.URL.Query()可以获取地址栏中的参数,返回Values类型,
+即map[string][]string
+#+BEGIN_SRC go
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/", HandleRequest)
+	http.ListenAndServe(":8888", nil)
+}
+
+func HandleRequest(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("<h1>第一个web程序</h1"))
+	w.Write([]byte("\n<h1>URL参数</h1>"))
+	w.Write([]byte(fmt.Sprintf("%v", r.URL.Query())))
+	w.Write([]byte(r.URL.Path))
+}
+#+END_SRC
+运行结果:
+
+[[url.png]]
+
++ func (r *Request)ParseForm() error
+解析URL请求的参数并更新r.Form
+
+#+BEGIN_SRC go
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/", HandleRequest)
+	http.ListenAndServe(":8888", nil)
+}
+
+func HandleRequest(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", " text/html;charset=utf-8")
+	if "POST" == r.Method {
+		r.ParseForm()
+		//FormValue("username")默认取出的是第一个
+		w.Write([]byte("用户名: " + r.FormValue("username") + "<br/>"))
+		w.Write([]byte("<hr/>"))
+		names := r.Form["username"]
+		w.Write([]byte("username 有两个: " + fmt.Sprintf("%v", names)))
+		w.Write([]byte("<hr/>r.Form的内容: " + fmt.Sprintf("%v", r.Form)))
+		w.Write([]byte("<hr/>r.PostForm的内容: " + fmt.Sprintf("%v", r.Form)))
+	} else {
+		strBody := `<form action="` + r.URL.RequestURI() + `" method="post">
+用户名: <input name="username" type="text" /><br/>
+用户名: <input name="username" type="text" /><br/>
+<input type="submit" id="submit" value="submit">
+</form>`
+		w.Write([]byte(strBody))
+		r.ParseForm()
+	}
+}
+#+END_SRC
