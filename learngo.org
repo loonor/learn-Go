@@ -1882,3 +1882,278 @@ func HandleRequest(w http.ResponseWriter, r *http.Request) {
 	}
 }
 #+END_SRC
+*** 文件上传
+Go的文件上传处理,Request.FormFile返回一个multipart.File对象,可以直接读取文件内容,并保存.
++ func (r *Request)FormFile(key string)(multipart.File, *multipart.FileHeader, error)
+multipart.File是一个接口,继承io.Reader接口,通过该接口读取上传文件的内容.
+multipart.FileHeader是一个结构体,可以通过该结构体取到上传文件的名称,文件类型
+#+BEGIN_SRC go
+type File interface {
+	io.Reader
+	io.ReaderAt
+	io.Seeker
+	io.Closer
+}
+type FileHeader struct {
+	Filename string
+	Header textproto.MIMEHeader
+	...
+}
+#+END_SRC
+实例:
+#+BEGIN_SRC go
+package main
+
+import (
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+)
+
+func HelloServer(w http.ResponseWriter, r *http.Request) {
+	if "POST" == r.Method {
+		file, handler, err := r.FormFile("file")
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+		fmt.Println(handler.Header)
+		defer file.Close()
+
+		f, err := os.OpenFile("./"+handler.Filename, os.O_WRONLY|os.O_CREATE, os.ModePerm)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+
+		defer f.Close()
+
+		size, err := io.Copy(f, file)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		fmt.Fprintf(w, "上传文件的大小为: %d", size)
+		return
+	}
+	w.Header().Add("Content-Type", "text/html;charset=utf-8")
+	w.WriteHeader(200)
+	html := `<Form enctype="multipart/form-data" action="/" method="POST">
+请选择上传的文件: <input name="file" type="file" /><br/>
+<input type="submit" value="Upload File" />
+</form>`
+
+	io.WriteString(w, html)
+}
+
+func main() {
+	http.HandleFunc("/", HelloServer)
+	err := http.ListenAndServe(":8888", nil)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+#+END_SRC
+*** HTML模板处理
+在html/template包中提供了Parse和Execute函数,parse用来解析模板,Execute用来将结果展示出来.
+- func (t *Template) Parse(text string) (* Template, error)
+Text为要解析的模板内容,返回*Template对象,如果成功,error为nil.
+- func (t *Template)Execute(wr io.Write,data interface{})(err error)
+将模板输出到wr中, data为向模板传递的数据.
+- func (t *Template)ParseFile(filename ...string)(*Template, error)
+ParseFile创建一个新的Template对象,并对指定模板文件进行解析.
+示例:
+#+BEGIN_SRC go
+package main
+
+import (
+	"fmt"
+	"html/template"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/", HelloServer)
+	err := http.ListenAndServe(":8888", nil)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+
+func HelloServer(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("test.tpl") //解析test.tpl文件
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	err = t.Execute(w, nil) //执行,显示模板内容,没有参数,所以使用nil
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+#+END_SRC
+*** 模板基本语法
+1) 变量 在模板中,使用{{和}}来输出变量到当前位置,如{{.}},{{.UserName}}
+示例:
+#+BEGIN_SRC go
+package main
+
+import (
+	"fmt"
+	"html/template"
+	"os"
+)
+
+func main() {
+	strTpl := "你好,{{.}}\n"
+	t, err := template.New("test").Parse(strTpl)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	strTpl2 := "姓名: {{.Name}}\n年龄: {{.Age}}\n"
+	user := make(map[string]interface{})
+	user["Name"] = "斌斌" //亲爱的儿子
+	user["Age"] = 1.5
+	t, err = template.New("test2").Parse(strTpl2)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	err = t.Execute(os.Stdout, user)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+#+END_SRC
+2) if else条件
+在模板中if else条件语句格式:
+{{if pipeline}} T1 {{else}} TO {{end}}
+或
+{{if pipeline}} T1 {{end}}
+示例:
+#+BEGIN_SRC go
+package main
+
+import (
+	"fmt"
+	"html/template"
+	"os"
+)
+
+func main() {
+	strTpl := "{{if .IsLogin}} 已登录 {{else}} 请登录 {{end}}\n {{if .IsVip}} 贵宾 {{else}} 非贵宾 {{end}}\n"
+	data := make(map[string]bool)
+	data["IsLogin"] = true
+	t, err := template.New("test").Parse(strTpl)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	err = t.Execute(os.Stdout, data)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+#+END_SRC
+3) range 在模板中可以使用range来取array,map,slice,channel中的值.
+格式如下
+{{range pipeline}} T1 {{end}}
+或
+{{range pipeline}} T1 {{else}} TO {{ end }}
+#+BEGIN_SRC go
+package main
+
+import (
+	"fmt"
+	"html/template"
+	"os"
+)
+
+func main() {
+	strTpl := "{{range .test}} {{.}}\n{{end}} {{range .test1}} {{.}}\n {{else}} test1不存在 {{end}}\n"
+	data := make(map[string]interface{})
+	arr := []int{1, 2, 3, 4}
+	data["test"] = arr
+	t, err := template.New("test").Parse(strTpl)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	err = t.Execute(os.Stdout, data)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+#+END_SRC
+*** 模板函数
+Go提供了and,or,len等模板函数.
+使用示例:
+#+BEGIN_SRC go
+package main
+
+import (
+	"fmt"
+	"html/template"
+	"os"
+)
+
+func main() {
+	strTpl := "and a b结果为:{{and .a .b}}\nor a b结果为:{{or .a .b}}\n"
+
+	data := make(map[string]bool)
+	data["a"] = true
+	data["b"] = false
+
+	t, err := template.New("test").Parse(strTpl)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	err = t.Execute(os.Stdout, data)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+#+END_SRC
+Go提供了Funcs函数,用来设置自定义的模板函数
+- func (t *Template)Funcs(funcMap FuncMap) *Template
+- type FuncMap map[string]interface{}
+示例:
+#+BEGIN_SRC go
+package main
+
+import (
+	"fmt"
+	"html/template"
+	"os"
+)
+
+func main() {
+	strTpl := "{{SayHello}}\n"
+	funcs := make(template.FuncMap)
+	funcs["SayHello"] = SayHello
+	t, err := template.New("test").Funcs(funcs).Parse(strTpl)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	err = t.Execute(os.Stdout, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func SayHello() string {
+	return "你好,自定义模板函数"
+}
+#+END_SRC
