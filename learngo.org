@@ -223,7 +223,7 @@ func main() {
     c  //2
     d  //3
     e = 5
-    f = iota  //0
+    f = iota  //5,在一个const里,从第一个iota开始,计数不变,e等于被从新赋值
     )
 *** 控制流
 **** if else
@@ -1355,6 +1355,36 @@ type Person struct {
 #+END_SRC
 
 * TCP与UDP网络编程
+一般的Socket编程模式:
+1) 建立Socket: 使用Socket()函数 
+2) 绑定Socket: 使用bind()函数 
+3) 监听:使用listen(),或者连接connect()函数
+4) 接受连接:使用accept()函数
+5) 接收: 使用receive()函数,或者发送:使用send()函数 
+
+Go对此进行了抽象和包装.使用net.Dial()
+Dial()函数原型:
+#+BEGIN_SRC go
+func Dial(net, addr string) (Conn, error)
+
+几种常见协议的调用方式:
+TCP链接:
+conn, err := Dial("tcp", "192.168.0.1:8000")
+UDP链接:
+conn, err := Dial("udp", "192.168.0.1:8888")
+ICMP链接(使用协议名称):
+conn, err := Dial("ip4:icmp", "www.baidu.com") //-*-又给百度打广告了
+ICMP链接(使用协议编号):
+conn, err := Dial("ip4:1", "10.0.0.1")
+
+在连接成功后,可以进行数据的发送和接收.发送数据使用conn的Write()成员方法,
+接收数据使用Read()方法
+
+ICMP示例:
+#+BEGIN_SRC go
+
+#+END_SRC
+#+END_SRC
 *** TCP编程
 TCP即传输控制协议/网间协议,是一种面向连接(连接导向)的,可靠的,
 基于字节流的一个端到端(Peer-to-Peer)的传输层协议.
@@ -2173,13 +2203,10 @@ andlabs/ui示例:
 package main
 
 import (
-	"fmt"
-
 	"github.com/andlabs/ui"
 )
 
 func main() {
-	fmt.Println("Hello World!")
 	err := ui.Main(func() {
 		name := ui.NewEntry()
 		button := ui.NewButton("Greet")
@@ -2212,3 +2239,4 @@ $ go build main.go
 $ ./main
 #+END_SRC
 [[./gui.png]]
+
