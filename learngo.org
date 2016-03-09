@@ -376,7 +376,7 @@ func main() {
 
     #+END_SRC
 * 多线程
-*** 多线程
+*** 什么是多线程
     线程是CPU调度的最小单位,只有不同的线程才能同时在多核CPU上同时运行.
     但线程太占资源,Go中的goroutine是一个轻量级的线程,执行时只需要4-5k的内存,
     比线程更易用,更高效,更轻便,调度开销比线程小,可同时运行上千万个并发.
@@ -2157,3 +2157,58 @@ func SayHello() string {
 	return "你好,自定义模板函数"
 }
 #+END_SRC
+* GUI编程 
+GoGUI编程使用的库：https://github.com/andlabs/ui
+首先需要libui库：https://github.com/andlabs/libui
+#+BEGIN_SRC shell
+$ git clone https://github.com/andlabs/libui
+$ cd libui; make
+$ go get github.com/andlabs/ui
+#+END_SRC
+将libui下的ui.h复制到$GOPATH/src/github.com/andlabs/ui目录下
+将out文件夹下的libui.so.0 libui.so 复制到自己项目目录下
+andlabs/ui示例:
+#+BEGIN_SRC go -n
+//file: main.go
+package main
+
+import (
+	"fmt"
+
+	"github.com/andlabs/ui"
+)
+
+func main() {
+	fmt.Println("Hello World!")
+	err := ui.Main(func() {
+		name := ui.NewEntry()
+		button := ui.NewButton("Greet")
+		greeting := ui.NewLabel("")
+		box := ui.NewVerticalBox()
+		box.Append(ui.NewLabel("Enter your name: "), false)
+		box.Append(name, false)
+		box.Append(button, false)
+		box.Append(greeting, false)
+		window := ui.NewWindow("Hello", 200, 100, false)
+		window.SetChild(box)
+		button.OnClicked(func(*ui.Button) {
+			greeting.SetText("Hello, " + name.Text() + "!")
+		})
+		window.OnClosing(func(*ui.Window) bool {
+			ui.Quit()
+			return true
+		})
+		window.Show()
+	})
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+#+END_SRC
+#+BEGIN_SRC shell
+$ go build main.go
+$ ./main
+#+END_SRC
+[[./gui.png]]
