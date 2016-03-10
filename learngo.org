@@ -1379,11 +1379,14 @@ conn, err := Dial("ip4:1", "10.0.0.1")
 
 在连接成功后,可以进行数据的发送和接收.发送数据使用conn的Write()成员方法,
 接收数据使用Read()方法
+Dial()函数是对DialTCP() DialUDP() DialIP()和DialUnix()封装
++ func DialTCP(net string, laddr, raddr *TCPAddr) (c *TCPConn, err error)
++ func DialUDP(net string, laddr, raddr *UDPAddr) (c *UDPConn, err error)
++ func DialIP(netProto string, laddr, raddr *IPAddr) (c *IPConn, err error)
++ func DialUnix(net string, laddr, raddr *UnixAddr) (c *UnixConn, err error)
+尝试一下DialTCP
+#+BEGIN_SRC Go
 
-ICMP示例:
-#+BEGIN_SRC go
-
-#+END_SRC
 #+END_SRC
 *** TCP编程
 TCP即传输控制协议/网间协议,是一种面向连接(连接导向)的,可靠的,
