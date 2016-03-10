@@ -1385,8 +1385,70 @@ Dial()函数是对DialTCP() DialUDP() DialIP()和DialUnix()封装
 + func DialIP(netProto string, laddr, raddr *IPAddr) (c *IPConn, err error)
 + func DialUnix(net string, laddr, raddr *UnixAddr) (c *UnixConn, err error)
 尝试一下DialTCP
-#+BEGIN_SRC Go
+#+BEGIN_SRC Go -n -r
+package main
 
+import (
+	"fmt"
+	"io/ioutil"
+	"net"
+	"os"
+)
+
+func main() {
+	if len(os.Args) < 2 {
+		fmt.Fprintf(os.Stderr, "Usage: %s host:port", os.Args[0])
+		os.Exit(1)
+	}
+
+	service := os.Args[1]
+	//将service
+	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
+	CheckError(err)
+	//链接,使用DialTCP()
+	conn, err := net.DialTCP("tcp", nil, tcpAddr)
+	CheckError(err)
+
+	_, err = conn.Write([]byte("HEAD / HTTP/1.0\r\n\r\n"))
+	CheckError(err)
+
+	result, err := ioutil.ReadAll(conn)
+	CheckError(err)
+
+	fmt.Println(string(result))
+	os.Exit(0)
+}
+
+func CheckError(err error) {
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Fatal error: %s", err.Error())
+		os.Exit(1)
+	}
+}
+#+END_SRC
+运行结果:
+#+BEGIN_SRC shell
+$ ./main www.baidu.com:80
+HTTP/1.1 200 OK
+Date: Thu, 10 Mar 2016 09:13:35 GMT
+Content-Type: text/html
+Content-Length: 14613
+Last-Modified: Tue, 02 Sep 2014 08:55:13 GMT
+Connection: Close
+Vary: Accept-Encoding
+Set-Cookie: BAIDUID=E5D3495E19089E6435FB758867023725:FG=1; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com
+Set-Cookie: BIDUPSID=E5D3495E19089E6435FB758867023725; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com
+Set-Cookie: PSTM=1457601215; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com
+Set-Cookie: BDSVRTM=0; path=/
+P3P: CP=" OTI DSP COR IVA OUR IND COM "
+Server: BWS/1.1
+X-UA-Compatible: IE=Edge,chrome=1
+Pragma: no-cache
+Cache-control: no-cache
+BDPAGETYPE: 1
+BDQID: 0xf54ec43500061668
+BDUSERID: 0
+Accept-Ranges: bytes
 #+END_SRC
 *** TCP编程
 TCP即传输控制协议/网间协议,是一种面向连接(连接导向)的,可靠的,
