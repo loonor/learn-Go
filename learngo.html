@@ -1,0 +1,3446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Go语言开发教程</title>
+<!-- 2016-03-10 四 18:29 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="龙小懒" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Go语言开发教程</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 目录</a></li>
+<li><a href="#sec-2">2. GO语言基础</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-2-0-1">2.0.1. 第一个Go程序</a></li>
+<li><a href="#sec-2-0-2">2.0.2. 基本类型</a></li>
+<li><a href="#sec-2-0-3">2.0.3. 定义变量</a></li>
+<li><a href="#sec-2-0-4">2.0.4. array slice map</a></li>
+<li><a href="#sec-2-0-5">2.0.5. 常量</a></li>
+<li><a href="#sec-2-0-6">2.0.6. 控制流</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 函数</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-3-0-1">3.0.1. 函数定义</a></li>
+<li><a href="#sec-3-0-2">3.0.2. defer</a></li>
+<li><a href="#sec-3-0-3">3.0.3. 函数类型</a></li>
+<li><a href="#sec-3-0-4">3.0.4. 错误处理</a></li>
+<li><a href="#sec-3-0-5">3.0.5. 关于权限问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-4">4. 面向对象编程</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-4-0-1">4.0.1. struct</a></li>
+<li><a href="#sec-4-0-2">4.0.2. 继承</a></li>
+<li><a href="#sec-4-0-3">4.0.3. Interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-5">5. 多线程</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-5-0-1">5.0.1. 什么是多线程</a></li>
+<li><a href="#sec-5-0-2">5.0.2. channel</a></li>
+<li><a href="#sec-5-0-3">5.0.3. 进程同步</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-6">6. 日期与定时器</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-6-0-1">6.0.1. 日期的获取与计算</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-7">7. 文件操作</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-7-0-1">7.0.1. 路径</a></li>
+<li><a href="#sec-7-0-2">7.0.2. 文件读写</a></li>
+<li><a href="#sec-7-0-3">7.0.3. 遍历目录下的文件</a></li>
+<li><a href="#sec-7-0-4">7.0.4. 序列化</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-8">8. JSON与XML解析</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-8-0-1">8.0.1. XML序列化与解析</a></li>
+<li><a href="#sec-8-0-2">8.0.2. xml包的Marshal函数可以把一个对象直接序列化成字符</a></li>
+<li><a href="#sec-8-0-3">8.0.3. UnMarshal将一个xml反序列化为对象</a></li>
+<li><a href="#sec-8-0-4">8.0.4. JSON序列化与反序列化</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-9">9. MySQL数据库操作</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-9-0-1">9.0.1. 安装MySQL驱动</a></li>
+<li><a href="#sec-9-0-2">9.0.2. MySQL数据库操作</a></li>
+<li><a href="#sec-9-0-3">9.0.3. 事务</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-10">10. 反射</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-10-0-1">10.0.1. 反射基础</a></li>
+<li><a href="#sec-10-0-2">10.0.2. 反射调用函数</a></li>
+<li><a href="#sec-10-0-3">10.0.3. 反射取Struct的Tag信息</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-11">11. 实现一个自己的ORM</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-11-0-1">11.0.1. 实现自己的ORM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-12">12. TCP与UDP网络编程</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-12-0-1">12.0.1. TCP编程</a></li>
+<li><a href="#sec-12-0-2">12.0.2. TCP编程实战</a></li>
+<li><a href="#sec-12-0-3">12.0.3. UDP网络编程</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-13">13. WEB编程</a>
+<ul>
+<li>
+<ul>
+<li><a href="#sec-13-0-1">13.0.1. web程序</a></li>
+<li><a href="#sec-13-0-2">13.0.2. URL参数与Form表单处理</a></li>
+<li><a href="#sec-13-0-3">13.0.3. 文件上传</a></li>
+<li><a href="#sec-13-0-4">13.0.4. HTML模板处理</a></li>
+<li><a href="#sec-13-0-5">13.0.5. 模板基本语法</a></li>
+<li><a href="#sec-13-0-6">13.0.6. 模板函数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-14">14. GUI编程</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 目录</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><i>GO语言基础</i>
+</li>
+<li><i>函数</i>
+</li>
+<li><i>面向对象编程</i>
+</li>
+<li><i>多线程</i>
+</li>
+<li><i>日期与定时器</i>
+</li>
+<li><i>文件操作</i>
+</li>
+<li><i>JSON与XML解析</i>
+</li>
+<li><i>MySQL数据库操作</i>
+</li>
+<li><i>反射</i>
+</li>
+<li><i>实现一个自己的ORM</i>
+</li>
+<li><i>TCP与UDP网络编程</i>
+</li>
+<li><i>WEB编程</i>
+</li>
+<li><i>GUI编程</i> 
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> GO语言基础</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-0-1" class="outline-4">
+<h4 id="sec-2-0-1"><span class="section-number-4">2.0.1</span> 第一个Go程序</h4>
+<div class="outline-text-4" id="text-2-0-1">
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+import (
+"fmt"
+)
+func main() {
+fmt.Println("Hello World!")
+}
+</pre>
+</div>
+<p>
+package 定义包(main)
+import 引入包(fmt)
+func 函数(main 主函数)
+Go所有字符串都是UTF-8编码,Go源文件采用UTF-8编码
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-0-2" class="outline-4">
+<h4 id="sec-2-0-2"><span class="section-number-4">2.0.2</span> 基本类型</h4>
+<div class="outline-text-4" id="text-2-0-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="right" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">类型</th>
+<th scope="col" class="right">长度(字节)</th>
+<th scope="col" class="left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">bool</td>
+<td class="right">1</td>
+<td class="left">true false.不能把非零值当作true</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">byte</td>
+<td class="right">1</td>
+<td class="left">uint8 别名</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">rune</td>
+<td class="right">4</td>
+<td class="left">int32 别名.代表一个Unicode字符.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">int/uint</td>
+<td class="right">4</td>
+<td class="left">依据所运行的平台,32bit/64bit.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">int8/uint8</td>
+<td class="right">1</td>
+<td class="left">-128~127   / 0 ~ 255</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">int16/uint16</td>
+<td class="right">2</td>
+<td class="left">-32768~32767;0~65535</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">int32/uint32</td>
+<td class="right">4</td>
+<td class="left">-21亿 ~ 21亿, 0 ~ 42亿</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">complex64</td>
+<td class="right">4</td>
+<td class="left">复数类型,即32位实数+32位虚数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">complex128</td>
+<td class="right">16</td>
+<td class="left">复数类型,即64位实数+64位虚数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">uintptr</td>
+<td class="right">&#xa0;</td>
+<td class="left">能够保存指针的32位或64位整数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">array</td>
+<td class="right">&#xa0;</td>
+<td class="left">数组,值类型,如<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>int</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">struct</td>
+<td class="right">&#xa0;</td>
+<td class="left">结构体,值类型</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">slice</td>
+<td class="right">&#xa0;</td>
+<td class="left">引用类型 如: []int</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">map</td>
+<td class="right">&#xa0;</td>
+<td class="left">引用类型</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">channel</td>
+<td class="right">&#xa0;</td>
+<td class="left">引用类型</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Interface</td>
+<td class="right">&#xa0;</td>
+<td class="left">接口类型</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">function</td>
+<td class="right">&#xa0;</td>
+<td class="left">函数类型</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-2-0-3" class="outline-4">
+<h4 id="sec-2-0-3"><span class="section-number-4">2.0.3</span> 定义变量</h4>
+<div class="outline-text-4" id="text-2-0-3">
+<p>
+Go语言里面定义变量有多种方式
+</p>
+<ol class="org-ol">
+<li>var n int //定义变量n
+</li>
+<li>var i int = 3 //定义变量i并赋值3
+</li>
+<li>var(
+</li>
+</ol>
+
+<p>
+aa int = 3
+</p>
+
+<p>
+   str string="abcd"
+)
+</p>
+<ol class="org-ol">
+<li>var i1,i2,i3 int=1,2,3
+</li>
+<li>var strName = "zhangsan"
+</li>
+<li>strSex := "男"
+</li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-go"><span class="linenr"> 1: </span>package main
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span>import "fmt"
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>func main() {
+<span class="linenr"> 6: </span>	var b bool
+<span class="linenr"> 7: </span>	var n int
+<span class="linenr"> 8: </span>	var i int = 3
+<span class="linenr"> 9: </span>	var (
+<span class="linenr">10: </span>		aa  int = 3
+<span class="linenr">11: </span>		str string
+<span class="linenr">12: </span>	)
+<span class="linenr">13: </span>	var i1, i2, i3 int = 1, 2, 3
+<span class="linenr">14: </span>	var strName = "张三"
+<span class="linenr">15: </span>	strSex := "男"
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>	fmt.Println("n = ", n)
+<span class="linenr">18: </span>	fmt.Println("b ", b)
+<span class="linenr">19: </span>	fmt.Println("i=", i)
+<span class="linenr">20: </span>	fmt.Println("aa=", aa)
+<span class="linenr">21: </span>	fmt.Println("str=", str)
+<span class="linenr">22: </span>	fmt.Println("i1=", i1, "i2=", i2, "i3=", i3)
+<span class="linenr">23: </span>	fmt.Println("strName=", strName)
+<span class="linenr">24: </span>	fmt.Println("strSex=", strSex)
+<span class="linenr">25: </span>}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-0-4" class="outline-4">
+<h4 id="sec-2-0-4"><span class="section-number-4">2.0.4</span> array slice map</h4>
+<div class="outline-text-4" id="text-2-0-4">
+</div><ol class="org-ol"><li><a id="sec-2-0-4-1" name="sec-2-0-4-1"></a>数组<br  /><div class="outline-text-5" id="text-2-0-4-1">
+<ul class="org-ul">
+<li>array是固定长度的数组:
+</li>
+</ul>
+<p>
+   <b>1.Go中的数组是值类型,如果将一个数组赋值给另外一个数组,
+实际上是将整个数组拷贝一份</b>
+   <b>2.如果Go中的数组作为函数的参数,实际是传递参数的一份数组拷贝</b>
+   <b>3.array的长度也是Type的一部分</b>
+</p>
+
+<ul class="org-ul">
+<li>数组声明:
+</li>
+</ul>
+<p>
+var arr<sub>1</sub> <sup><a id="fnr.1.100" name="fnr.1.100" class="footref" href="#fn.1">1</a></sup>int  //初始值为0
+</p>
+
+<p>
+arr<sub>2</sub> := <sup><a id="fnr.1.100" name="fnr.1.100" class="footref" href="#fn.1">1</a></sup>int{} //同上
+</p>
+
+<p>
+arr<sub>3</sub> := <sup><a id="fnr.1.100" name="fnr.1.100" class="footref" href="#fn.1">1</a></sup>int{1,2} //初始值{1,2}
+</p>
+
+<p>
+arr<sub>4</sub> := [&#x2026;]int{1,2} //通过初始值判断大小
+</p>
+
+<p>
+arr<sub>5</sub> := [&#x2026;]int{3:9} //声明有4个元素的数组,初始值为{0,0,0,9}
+</p>
+</div>
+</li>
+<li><a id="sec-2-0-4-2" name="sec-2-0-4-2"></a>切片 Slice<br  /><div class="outline-text-5" id="text-2-0-4-2">
+<p>
+Slice是引用类型,有点像指向数组的指针.
+[]T是一个T类型的切片,切片不需要指定长度,指定长度就成了数组.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import "fmt"
+import "reflect"
+
+func main() {
+p := [...]int{2, 3, 5, 7, 11, 13} //定义一个数组
+s1 := p[1:3]
+fmt.Println(s1)
+fmt.Println(reflect.TypeOf(p))
+fmt.Println(reflect.TypeOf(s1))
+ChangeArrayValue(p)
+fmt.Println(p)
+
+ChangeSliceValue(s1)
+fmt.Println(s1)
+fmt.Println(p)
+}
+
+func ChangeArrayValue(arr [6]int) {
+arr[0] = 100
+}
+func ChangeSliceValue(slice []int) {
+slice[0] = 100
+}
+</pre>
+</div>
+</div>
+</li>
+<li><a id="sec-2-0-4-3" name="sec-2-0-4-3"></a>Map<br  /><div class="outline-text-5" id="text-2-0-4-3">
+<p>
+map是一个key-value的hash结构,map的key必须支持比较运算符(<code>= !</code>)的类型.
+Map用make来分配内存空间,make(map[TK]TV),TK是key的类型,TV是值的类型.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">// Package main provides ...
+package main
+
+import (
+"fmt"
+)
+
+func main() {
+mp := make(map[string]string)
+mp["a"] = "1"
+mp["b"] = "2"
+mp["pi"] = "3.1415926"
+
+v, ok := mp["pi"]
+
+if ok {
+fmt.Println(v)
+} else {
+fmt.Println("Key sh 不存在")
+}
+
+}
+</pre>
+</div>
+</div>
+</li>
+<li><a id="sec-2-0-4-4" name="sec-2-0-4-4"></a>range 遍历<br  /><div class="outline-text-5" id="text-2-0-4-4">
+<p>
+Range可以对string array slice map channel进行迭代器操作.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">// Package main provides ...
+package main
+
+import (
+"fmt"
+)
+
+func main() {
+arr := [3]int{1, 2, 3}
+var mp = map[int]string{1: "a", 2: "b", 3: "c"}
+for k, v := range mp {
+fmt.Println(k, " = ", v)
+}
+
+for _, v := range arr {
+fmt.Println(v)
+}
+}
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+<div id="outline-container-sec-2-0-5" class="outline-4">
+<h4 id="sec-2-0-5"><span class="section-number-4">2.0.5</span> 常量</h4>
+<div class="outline-text-4" id="text-2-0-5">
+<p>
+c常量必须是编译器能确定的常量的定义使用const.
+const PI=3.1415926
+const(
+a = 12
+b = "bool"
+)
+const(
+a = iota //0
+b  //1
+c  //2
+d  //3
+e = 5
+f = iota  //5,在一个const里,从第一个iota开始,计数不变,e等于被从新赋值
+)
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-0-6" class="outline-4">
+<h4 id="sec-2-0-6"><span class="section-number-4">2.0.6</span> 控制流</h4>
+<div class="outline-text-4" id="text-2-0-6">
+</div><ol class="org-ol"><li><a id="sec-2-0-6-1" name="sec-2-0-6-1"></a>if else<br  /><div class="outline-text-5" id="text-2-0-6-1">
+<p>
+if a == b {
+&#x2026;
+}// else {
+&#x2026;
+}
+</p>
+</div>
+</li>
+<li><a id="sec-2-0-6-2" name="sec-2-0-6-2"></a>switch<br  /><div class="outline-text-5" id="text-2-0-6-2">
+<p>
+默认带break
+switch i {
+case ex1:
+&#x2026;
+case ex2:
+..
+case ex3:
+&#x2026;
+case ex4:
+fallthrough
+default:
+&#x2026;
+}
+</p>
+</div>
+</li>
+<li><a id="sec-2-0-6-3" name="sec-2-0-6-3"></a>for<br  /><div class="outline-text-5" id="text-2-0-6-3">
+<p>
+for init;condition;post{}
+for condition {}
+for {}
+</p>
+</div>
+</li></ol>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 函数</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-0-1" class="outline-4">
+<h4 id="sec-3-0-1"><span class="section-number-4">3.0.1</span> 函数定义</h4>
+<div class="outline-text-4" id="text-3-0-1">
+<p>
+可以多返回值 可变参
+func mymethod(args type) return1 type1, return2 type2&#x2026;{}
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-0-2" class="outline-4">
+<h4 id="sec-3-0-2"><span class="section-number-4">3.0.2</span> defer</h4>
+<div class="outline-text-4" id="text-3-0-2">
+<p>
+延迟执行,按照后进先出的原则依次执行每一个defer注册的函数,
+保证资源释放,错误处理,清理数据.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-0-3" class="outline-4">
+<h4 id="sec-3-0-3"><span class="section-number-4">3.0.3</span> 函数类型</h4>
+<div class="outline-text-4" id="text-3-0-3">
+<p>
+函数也是一种类型,拥有相同参数,相同返回值的函数,是同一种类型
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">// Package main provides ...
+package main
+
+import (
+"fmt"
+)
+
+type MyFuncType func(int) bool
+
+func IsBigThan5(n int) bool {
+return n &gt; 5
+}
+func Display(arr []int, f MyFuncType) {
+for _, v := range arr {
+if f(v) {
+fmt.Println(v)
+}
+}
+}
+func main() {
+arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+Display(arr, IsBigThan5)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-0-4" class="outline-4">
+<h4 id="sec-3-0-4"><span class="section-number-4">3.0.4</span> 错误处理</h4>
+<div class="outline-text-4" id="text-3-0-4">
+<p>
+Go语言中没有try&#x2026;catch&#x2026;finally这种结构化异常处理,
+而是panic代替throw抛出异常.使用recover函数来捕获异常.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">// Package main provides ...
+package main
+
+import (
+"fmt"
+)
+
+func Test() {
+defer func() {
+if err := recover(); err != nil {
+fmt.Println(err)
+}
+}()
+divide(5, 0)
+fmt.Println("end of test")
+}
+
+func divide(a, b int) int {
+return a / b
+}
+func main() {
+Test()
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-0-5" class="outline-4">
+<h4 id="sec-3-0-5"><span class="section-number-4">3.0.5</span> 关于权限问题</h4>
+<div class="outline-text-4" id="text-3-0-5">
+<p>
+Go语言以大写开头的方法 变量 结构体 结构体属性为公共权限
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 面向对象编程</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-0-1" class="outline-4">
+<h4 id="sec-4-0-1"><span class="section-number-4">4.0.1</span> struct</h4>
+<div class="outline-text-4" id="text-4-0-1">
+<p>
+结构体是一种自定义类型,是不同数据的集合体struct的值类型.
+通常用定义一个抽象的数据对象
+type Object struct {
+Name string
+Age  int 
+&#x2026;
+}
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-0-2" class="outline-4">
+<h4 id="sec-4-0-2"><span class="section-number-4">4.0.2</span> 继承</h4>
+<div class="outline-text-4" id="text-4-0-2">
+<p>
+type Base struct {
+&#x2026;
+}
+type Case struct {
+Base
+&#x2026;
+}
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-0-3" class="outline-4">
+<h4 id="sec-4-0-3"><span class="section-number-4">4.0.3</span> Interface</h4>
+<div class="outline-text-4" id="text-4-0-3">
+<p>
+接口是一系列操作的集合,是一种约定.任何非接口类型只要拥有某个接口的全部方法,
+就表示它实现了该接口,Go中无需显示在该类上添加接口声明.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">// Package main provides ...
+package main
+
+import (
+"fmt"
+)
+
+type Student struct {
+Name  string
+Age   int
+class string
+}
+
+type IStudent interface {
+GetName() string
+GetAge() int
+}
+
+//通过Get方法,我们就可以说Student实现了IStudent接口
+func (this *Student) GetName() string {
+return this.Name
+}
+
+func (this *Student) GetAge() int {
+return this.Age
+}
+
+func main() {
+var s1 IStudent = &amp;Student{"张三", 23, "2017(2)"}
+fmt.Println(s1.GetName)
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 多线程</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-0-1" class="outline-4">
+<h4 id="sec-5-0-1"><span class="section-number-4">5.0.1</span> 什么是多线程</h4>
+<div class="outline-text-4" id="text-5-0-1">
+<p>
+线程是CPU调度的最小单位,只有不同的线程才能同时在多核CPU上同时运行.
+但线程太占资源,Go中的goroutine是一个轻量级的线程,执行时只需要4-5k的内存,
+比线程更易用,更高效,更轻便,调度开销比线程小,可同时运行上千万个并发.
+</p>
+
+<p>
+默认情况下,调度器仅使用单线程,要想发挥多核处理器的并发处理能力,必须调用
+runtime.GOMAXPROCS(n)来设置可并发的线程数,也可以通过环境变量GOMAXPROCS达到相同的目的.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go"><span class="linenr"> 1: </span>// Package main provides ...
+<span class="linenr"> 2: </span>package main
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>import (
+<span class="linenr"> 5: </span>"fmt"
+<span class="linenr"> 6: </span>"runtime"
+<span class="linenr"> 7: </span>"time"
+<span class="linenr"> 8: </span>)
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>func SayHello() {
+<span class="linenr">11: </span>for i := 0; i &lt; 10; i++ {
+<span class="linenr">12: </span>fmt.Print("Hello")
+<span class="linenr">13: </span>runtime.Gosched() //释放CPU权限
+<span class="linenr">14: </span>}
+<span class="linenr">15: </span>}
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>func SayWorld() {
+<span class="linenr">18: </span>for i := 0; i &lt; 10; i++ {
+<span class="linenr">19: </span>fmt.Println("World!!")
+<span class="linenr">20: </span>runtime.Gosched()
+<span class="linenr">21: </span>}
+<span class="linenr">22: </span>}
+<span class="linenr">23: </span>
+<span class="linenr">24: </span>func main() {
+<span class="linenr">25: </span>fmt.Println(runtime.NumCPU()) //返回CPU核数
+<span class="linenr">26: </span>fmt.Println(runtime.NumGoroutine()) //返回当前进程的Goroutime线程数
+<span class="linenr">27: </span>go SayHello()
+<span class="linenr">28: </span>go SayWorld()
+<span class="linenr">29: </span>time.Sleep(5 * time.Second)
+<span class="linenr">30: </span>}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-0-2" class="outline-4">
+<h4 id="sec-5-0-2"><span class="section-number-4">5.0.2</span> channel</h4>
+<div class="outline-text-4" id="text-5-0-2">
+<p>
+Goroutine之间通过channel来通信,可以认为channel是一个管道或先进先出的队列.
+可以从一个goroutine向channel发送数据,在另一个goroutine中取出这个值.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go"><span class="linenr"> 1: </span>// Package main provides 生产者/消费者是最经典的channel使用示例,
+<span class="linenr"> 2: </span>//生产者goroutine负责将数据放入channel,消费者goroutine
+<span class="linenr"> 3: </span>package main
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>import (
+<span class="linenr"> 6: </span>"fmt"
+<span class="linenr"> 7: </span>)
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>func producer(ch chan int) {
+<span class="linenr">10: </span>defer close(ch) //关闭channel
+<span class="linenr">11: </span>for i := 0; i &lt; 10; i++ {
+<span class="linenr">12: </span>ch &lt;- i //阻塞,直到数据被消费者取走后才能发送下一条数据
+<span class="linenr">13: </span>}
+<span class="linenr">14: </span>}
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>func consumer(c, f chan int) {
+<span class="linenr">17: </span>for {
+<span class="linenr">18: </span>if v, ok := &lt;-c; ok {
+<span class="linenr">19: </span>fmt.Println(v) //阻塞,直到生产者放入数据后继续取数据
+<span class="linenr">20: </span>} else {
+<span class="linenr">21: </span>break
+<span class="linenr">22: </span>}
+<span class="linenr">23: </span>}
+<span class="linenr">24: </span>f &lt;- 1
+<span class="linenr">25: </span>}
+<span class="linenr">26: </span>
+<span class="linenr">27: </span>func main() {
+<span class="linenr">28: </span>buf := make(chan int)
+<span class="linenr">29: </span>flg := make(chan int)
+<span class="linenr">30: </span>
+<span class="linenr">31: </span>go producer(buf)
+<span class="linenr">32: </span>
+<span class="linenr">33: </span>go consumer(buf, flg)
+<span class="linenr">34: </span>&lt;-flg
+<span class="linenr">35: </span>}
+</pre>
+</div>
+<p>
+可以初始化带缓冲的channel
+ch := make(chan int, 10)
+监听多个channel时,使用select,随机处理一个可用channel
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">// Package main provides ...
+package main
+
+import (
+"fmt"
+)
+
+func Fibonacci(c, quit chan int) {
+x, y := 0, 1
+for {
+select {
+case c &lt;- x:
+x, y = y, x+y
+case &lt;-quit:
+fmt.Println("quit")
+return
+}
+}
+}
+func main() {
+c := make(chan int)
+quit := make(chan int)
+go func() {
+for i := 0; i &lt; 10; i++ {
+fmt.Println(&lt;-c)
+}
+quit &lt;- 0
+}()
+
+Fibonacci(c, quit)
+}
+</pre>
+</div>
+<p>
+channel被read/write阻塞时,会一直阻塞下去,直到channel关闭,
+产生一个异常退出.通过select来实现channel超时机制.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">// Package main provides ...
+package main
+
+import (
+"fmt"
+"time"
+)
+
+func main() {
+c := make(chan int)
+select {
+case &lt;-c: //测试使用,没有向c发送任何数据,会一直阻塞
+fmt.Println("收到数据")
+case &lt;-time.After(5 * time.Second):
+fmt.Println("超时退出")
+
+}
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-0-3" class="outline-4">
+<h4 id="sec-5-0-3"><span class="section-number-4">5.0.3</span> 进程同步</h4>
+<div class="outline-text-4" id="text-5-0-3">
+<p>
+互斥锁是线程间同步的一种机制,用来保证在同一个时刻只有一个线程访问共享资源.
+Go中的互斥锁在sync包中.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">// Package main provides 一个线程安全的map
+package main
+
+import "errors"
+import "fmt"
+import "sync"
+
+type MyMap struct {
+mp    map[string]int
+mutex *sync.Mutex
+}
+
+func (this *MyMap) Get(key string) (int, error) {
+this.mutex.Lock()
+i, ok := this.mp[key]
+this.mutex.Unlock()
+if !ok {
+fmt.Println("不存在")
+return i, errors.New("不存在")
+}
+return i, nil
+}
+
+func (this *MyMap) Set(key string, v int) {
+this.mutex.Lock()
+defer this.mutex.Unlock()
+this.mp[key] = v
+}
+func (this *MyMap) Display() {
+this.mutex.Lock()
+defer this.mutex.Unlock()
+for k, v := range this.mp {
+fmt.Println(k, " = ", v)
+}
+}
+
+func SetValue(m *MyMap) {
+var a rune
+a = 'a'
+for i := 0; i &lt; 10; i++ {
+m.Set(string(a+rune(i)), i)
+ }
+ }
+
+ func main() {
+ m := &amp;MyMap{mp: make(map[string]int), mutex: new(sync.Mutex)}
+ go SetValue(m)
+ go m.Display()
+ var str string
+ fmt.Scan(&amp;str)
+ }
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 日期与定时器</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-sec-6-0-1" class="outline-4">
+<h4 id="sec-6-0-1"><span class="section-number-4">6.0.1</span> 日期的获取与计算</h4>
+<div class="outline-text-4" id="text-6-0-1">
+<p>
+Time包定义了所有时间相关的函数.获取当前时间用time.Now()
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+"fmt"
+"time"
+)
+
+func main() {
+fmt.Println(time.Now())
+//格式输出:2006-01-02 15:04:05
+fmt.Println(time.Now().Format("2006-01-02 15:04:05")) 
+}
+</pre>
+</div>
+<p>
+type Duration int64表示一个持续的时间,单位是纳米.
+多用于时间的加减、定时等操作需要传Duration作为参数.
+时间相加用Add,相减用Sub,时间的比函数有After,Equal,Before
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+import (
+"fmt"
+"time"
+)
+func main() {
+t := time.Now()
+t2 := time.Add(24*time.Hour)
+d := t2.Sub(t)
+fmt.Println(t)
+fmt.Println(t2)
+fmt.Println(d)
+
+if t.Before(t2) {
+fmt.Println("t &lt; t2")
+}
+if t.After(t) {
+fmt.Println("t2 &gt; t")
+}
+if t.Equal(t2) {
+fmt.Println(t == t2)
+}
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 文件操作</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-sec-7-0-1" class="outline-4">
+<h4 id="sec-7-0-1"><span class="section-number-4">7.0.1</span> 路径</h4>
+<div class="outline-text-4" id="text-7-0-1">
+<p>
+func Base(path string) string 返回路径的最后一部分
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+"fmt"
+"path"
+"strings"
+)
+
+func main() {
+fmt.Println(path.Base("/usr/bin"))
+fmt.Println(path.Base(""))
+fmt.Println(path.Base("C:\\Windows"))
+fmt.Println(path.Base(strings.Replace("C:\\Windows", "\\", "/", -1)))
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-0-2" class="outline-4">
+<h4 id="sec-7-0-2"><span class="section-number-4">7.0.2</span> 文件读写</h4>
+<div class="outline-text-4" id="text-7-0-2">
+<p>
+func Create(name string) (file *File, err error)
+创建新文件,如果文件已存在,将被截断.新建的文件是可读写的,默认权限为0666
+func Open(name string)(file *File, err error)
+打开已存在的文件,用来读取文件内容.Open打开的文件是只读的,不能写.
+func OpenFile(name string, flag int, perm FileMode)(file *File, err error)
+OpenFile是一个通用的函数,可以用来创建文件,以只读方式打开文件,以读写方法打开文件等.
+Name是要打开或创建的文件名;flag是打开文件的方式,以只读方式或读写方式
+flag取值:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">O<sub>RDONLY</sub></td>
+<td class="left">以只读方式打开文件</td>
+</tr>
+
+<tr>
+<td class="left">O<sub>WRONLY</sub></td>
+<td class="left">以只写方式打开文件</td>
+</tr>
+
+<tr>
+<td class="left">O<sub>RDWR</sub></td>
+<td class="left">以读写方式打开文件</td>
+</tr>
+
+<tr>
+<td class="left">O<sub>APPEND</sub></td>
+<td class="left">以追加方式打开文件,写入的数据将追加到文件尾</td>
+</tr>
+
+<tr>
+<td class="left">O<sub>CREATE</sub></td>
+<td class="left">当文件不存在时创建文件</td>
+</tr>
+
+<tr>
+<td class="left">O<sub>EXCL</sub></td>
+<td class="left">与O<sub>CREATE一起使用</sub>,当文件已经存在时Open操作失败</td>
+</tr>
+
+<tr>
+<td class="left">O<sub>SYNC</sub></td>
+<td class="left">以同步方式打开文件</td>
+</tr>
+
+<tr>
+<td class="left">O<sub>TRUNC</sub></td>
+<td class="left">如果文件已存在,打开时将会清空文件内容.必须与O<sub>WRONLY或O</sub><sub>RDWR配合使用</sub></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+FileMode参数是文件的权限,只有在文件不存在,新创建文件时该参数才有效.
+用来指定新建的文件的权限,必须跟O<sub>CREATE配合使用</sub>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"io"
+	"os"
+)
+
+func main() {
+	f, err := os.OpenFile("新建文本文档.txt", os.O_CREATE|os.O_RDONLY|os.O_APPEND|os.O_WRONLY, 0666)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	defer f.Close()
+	f.WriteString("\r\n中国好\r\n")
+	buf := make([]byte, 1024)
+
+	var str string
+	f.Seek(0, os.SEEK_SET) //重置文件指针到开始位置
+
+	for {
+		n, ferr := f.Read(buf)
+		if ferr != nil &amp;&amp; ferr != io.EOF {
+			fmt.Println(ferr.Error())
+			break
+		}
+		if n == 0 {
+			break
+		}
+		fmt.Println(n)
+		str += string(buf[0:n])
+	}
+	fmt.Println(str)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-0-3" class="outline-4">
+<h4 id="sec-7-0-3"><span class="section-number-4">7.0.3</span> 遍历目录下的文件</h4>
+<div class="outline-text-4" id="text-7-0-3">
+<p>
+OpenFile除了可以打开文件,还可以打开一个目录,在File对象有一个
+Readdir函数,用来读取某个目录下的所有文件和目录信息,位于OS包中
+func (f *File)Readdir(n int)(fi []FileInfo, err error)
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func main() {
+	f, err := os.OpenFile("/usr/bin", os.O_RDONLY, 0666)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	defer f.Close()
+	arrFile, err1 := f.Readdir(0)
+	if err1 != nil {
+		fmt.Println(err1.Error())
+		return
+	}
+
+	for k, v := range arrFile {
+		fmt.Println(k, "\t", v.Name(), "\t", v.IsDir())
+	}
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-0-4" class="outline-4">
+<h4 id="sec-7-0-4"><span class="section-number-4">7.0.4</span> 序列化</h4>
+<div class="outline-text-4" id="text-7-0-4">
+<p>
+序列化就是将对象的状态信息转化为可以存储或传输的形式的过程.
+在序列化期间,对象将其当前的状态写入到临时或持久性存储区.
+之后,可以通过从存储区中读取或反序列化对象的状态,重新创建该对象.
+Gob是Go中所特用的序列化技术,它支持除了interface,function,channel外
+的所有Go数据类型.序列化使用Encoder,反序列化使用Decoder.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"encoding/gob"
+	"fmt"
+	"os"
+)
+
+type Student struct {
+	Name string
+	Age  int
+}
+
+func main() {
+	s := &amp;Student{Name: "张三", Age: 19}
+	f, err := os.Create("data.dat")
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	defer f.Close()
+
+	//创建Encoder对象
+	encode := gob.NewEncoder(f)
+	encode.Encode(s)
+
+	f.Seek(0, os.SEEK_SET)
+	decoder := gob.NewDecoder(f)
+	var s1 Student
+
+	decoder.Decode(&amp;s1)
+	fmt.Println(s1)
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> JSON与XML解析</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-sec-8-0-1" class="outline-4">
+<h4 id="sec-8-0-1"><span class="section-number-4">8.0.1</span> XML序列化与解析</h4>
+<div class="outline-text-4" id="text-8-0-1">
+<p>
+Xml作为一种平台无关的数据交换和信息传递技术应用十分广泛.
+Go中提供XML序列化的文法位于encoding/xml包中.
+func (enc *Encoder) Encode(v interface{}) error
+ 可以从一个对象直接序列化到io.Writer对象中.
+func (d *Decoder) Decode(v interface{}) error 从
+io.Reader中,反序列化xml
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"encoding/xml"
+	"fmt"
+	"os"
+)
+
+type Student struct {
+	Name string
+	Age  int
+}
+
+func main() {
+	f, err := os.Create("data.dat")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	defer f.Close()
+	s := &amp;Student{Name: "张三111", Age: 19}
+	encoder := xml.NewEncoder(f)
+	encoder.Encode(s)
+
+	f.Seek(0, os.SEEK_SET)
+
+	decoder := xml.NewDecoder(f)
+	var s1 Student
+
+	decoder.Decode(&amp;s1)
+	fmt.Println(s1)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8-0-2" class="outline-4">
+<h4 id="sec-8-0-2"><span class="section-number-4">8.0.2</span> xml包的Marshal函数可以把一个对象直接序列化成字符</h4>
+<div class="outline-text-4" id="text-8-0-2">
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"encoding/xml"
+	"fmt"
+)
+
+type Student struct {
+	Name string
+	Age  int
+}
+
+func main() {
+	s := &amp;Student{Name: "张三", Age: 19}
+	result, err := xml.Marshal(s)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Println(string(result))
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8-0-3" class="outline-4">
+<h4 id="sec-8-0-3"><span class="section-number-4">8.0.3</span> UnMarshal将一个xml反序列化为对象</h4>
+<div class="outline-text-4" id="text-8-0-3">
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"encoding/xml"
+	"fmt"
+	"os"
+)
+
+type Student struct {
+	Name string
+	Age  int
+}
+
+func main() {
+	f, err := os.Open("data.dat")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	defer f.Close()
+	buf := make([]byte, 1024)
+	n, err := f.Read(buf)
+	fmt.Println(buf[0:n])
+	str := string(buf[0:n])
+
+	var s Student
+	xml.Unmarshal(buf[0:n], &amp;s)
+	fmt.Println(s)
+	xml.Unmarshal([]byte(str), &amp;s)
+	fmt.Println(s)
+}
+</pre>
+</div>
+<p>
+在反序列化XML "&lt;Student&gt;&lt;Name&gt;张三&lt;/Name&gt;&lt;Age&gt;19&lt;/Age&gt;&lt;/Student&gt;"时,
+结构体名称跟&lt;Student&gt;对应,字段名Name,与&lt;Name&gt;对应,
+结构体中的字段必须是公有的,即大写字母开头.如果要解析的xml是小写的,
+可以使用tag来指定Struct的字段与xml标记的对应关系.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"encoding/xml"
+	"fmt"
+)
+
+type Student struct {
+	XMLName string `xml:"student"`
+	Name    string `xml:"name"`
+	Age     int    `xml:"age"`
+}
+
+type ABC string
+
+func main() {
+	str := `&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;student&gt;
+&lt;name&gt;张三&lt;/name&gt;
+&lt;age&gt;19&lt;/age&gt;
+&lt;/student&gt;`
+
+	var s Student
+
+	xml.Unmarshal([]byte(str), &amp;s)
+	fmt.Println(s)
+}
+</pre>
+</div>
+<p>
+对于大文件解析,或对性能有要求时,使用Token解析
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"encoding/xml"
+	"fmt"
+	"strings"
+)
+
+type Student struct {
+	Name string `xml:"name"`
+	Age  int    `xml:"age"`
+}
+
+type ABC string
+
+func main() {
+	str := `&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;student&gt;
+&lt;name&gt;张三&lt;/name&gt;
+&lt;age&gt;19&lt;/age&gt;
+&lt;/student&gt;`
+
+	decoder := xml.NewDecoder(strings.NewReader(str))
+	var strName string
+	for {
+		token, err := decoder.Token()
+		if err != nil {
+			break
+		}
+		switch t := token.(type) {
+		case xml.StartElement:
+			stelm := xml.StartElement(t)
+			fmt.Println("Start ", stelm.Name.Local)
+			strName = stelm.Name.Local
+		case xml.EndElement:
+			endelem := xml.EndElement(t)
+			fmt.Println("End ", endelem.Name.Local)
+		case xml.CharData:
+			data := xml.CharData(t)
+			str := string(data)
+			switch strName {
+			case "Name":
+				fmt.Println("姓名: ", str)
+			case "Age":
+				fmt.Println("年龄: ", str)
+			default:
+				fmt.Println("other: ", str)
+			}
+		}
+	}
+	var s Student
+
+	xml.Unmarshal([]byte(str), &amp;s)
+	fmt.Println(s)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8-0-4" class="outline-4">
+<h4 id="sec-8-0-4"><span class="section-number-4">8.0.4</span> JSON序列化与反序列化</h4>
+<div class="outline-text-4" id="text-8-0-4">
+<p>
+Json是一种比XML更轻量级的数据交换格式,易于人们阅读和编写,也易于程序解析和生成.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+)
+
+type Student struct {
+	Name string
+	Age  int
+}
+
+func main() {
+	f, err := os.Create("data.dat")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	defer f.Close()
+
+	s := &amp;Student{Name: "张三", Age: 19}
+
+	encoder := json.NewEncoder(f)
+	encoder.Encode(s)
+
+	f.Seek(0, os.SEEK_SET)
+	decoder := json.NewDecoder(f)
+	var s1 Student
+	decoder.Decode(&amp;s1)
+	fmt.Println(s1)
+}
+</pre>
+</div>
+<p>
+同样Json也提供了Marshal,Unmarshal,对于结构体可以使用`json:"JsonName"`
+来指定解/编码时对应的json名称.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type Student struct {
+	Name string `json:"username"`
+	Age  int
+}
+
+func main() {
+	s := &amp;Student{Name: "张三", Age: 19}
+
+	buf, err := json.Marshal(s)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	fmt.Println(string(buf))
+	var s1 Student
+	err = json.Unmarshal(buf, &amp;s1)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt.Println(s1)
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> MySQL数据库操作</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-sec-9-0-1" class="outline-4">
+<h4 id="sec-9-0-1"><span class="section-number-4">9.0.1</span> 安装MySQL驱动</h4>
+<div class="outline-text-4" id="text-9-0-1">
+<p>
+在实际应用中数据库操作是经常用到的.Go提供了database/sql,database/driver两个包.
+database/driver定义了一些标准的接口,这些接口由具体的数据库驱动程序实现,Go官方没有
+提供具体的驱动程序,仅提供了接口,驱动程序由第三方实现.
+MySQL常用驱动:<a href="https://github.com/go-sql-driver/mysql">mysql驱动</a>
+go get github.com/go-sql-driver/mysql
+go install github/go-sql-driver/mysql 
+</p>
+</div>
+</div>
+<div id="outline-container-sec-9-0-2" class="outline-4">
+<h4 id="sec-9-0-2"><span class="section-number-4">9.0.2</span> MySQL数据库操作</h4>
+<div class="outline-text-4" id="text-9-0-2">
+<p>
+func Open(driverName, dataSourceName string)(*DB, error)
+根据driverName打开指定的数据库.driverName驱动的名称,dataSourceName通常包含了
+数据库名,和链接信息,如服务器地址、用户名、密码等。
+</p>
+<ul class="org-ul">
+<li>func (db *DB)Exec(query string, args &#x2026;interface{})(Result, error)
+</li>
+</ul>
+<p>
+执行一个SQL查询,不返回任何行.通常用来执行数据的插入,更新操作.query是要执行的SQL
+语句,args是参数,执行成功error为nil,Result是一个接口,定义如下:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">type Result interface {
+   LastInsertId()(int64, error)
+   RowsAffected()(int64, error)
+}
+</pre>
+</div>
+<p>
+LastInsertId返回最后一次自动长列的值,RowsAffected返回所影响的行.
+</p>
+<ul class="org-ul">
+<li>func (db *DB)Query(query string, args &#x2026;interface{})(*Rows,error)
+</li>
+</ul>
+<p>
+执行SQL,并返回数据行.
+</p>
+<ul class="org-ul">
+<li>func (r *Row)Scan(dest &#x2026;interface{}) error
+</li>
+</ul>
+<p>
+用来从返回的数据中,取数据.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">var id int
+var name string
+row.Scan(&amp;id, &amp;name)
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>func (db *DB)QueryRow(query string, args &#x2026;interface{}) *Row
+</li>
+</ul>
+<p>
+与Query类似,唯一的区别是,该函数只返回一条数据
+实例:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sql">Drop table if exists person;
+create table person (
+id int(11) not null auto_increment,
+name varchar(255) default null,
+age int(11) default null,
+IsBoy tinyint(4) default null,
+primary key (id)
+) default charset=utf8;
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"database/sql"
+	"fmt"
+	_ "github.com/go-sql-driver/mysql"
+)
+
+func main() {
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/sampledb?charset=utf8")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer db.Close()
+	var result sql.Result
+
+	result, err = db.Exec("insert into person(name, age, IsBoy) values(?,?,?)", "张三", 19, true)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	lastId, _ := result.LastInsertId()
+	fmt.Println("新插入的数据ID为: ", lastId)
+	var row *sql.Row
+
+	row = db.QueryRow("select * from person")
+	var name string
+	var id, age int
+	var isBoy bool
+	err = row.Scan(&amp;id, &amp;name, &amp;age, &amp;isBoy)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println(id, "\t", name, "\t", age, "\t", isBoy)
+
+	result, err = db.Exec("insert into person(name, age, IsBoy) values(?, ?, ?)", "王红", 18, false)
+	fmt.Println("---------------")
+	var rows *sql.Rows
+	rows, err = db.Query("select * from person")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	for rows.Next() {
+		var name string
+		var id, age int
+		var isBoy bool
+		rows.Scan(&amp;id, &amp;name, &amp;age, &amp;isBoy)
+		fmt.Println(id, "\t", name, "\t", age, "\t", isBoy)
+	}
+
+	rows.Close()
+	//清空表
+	//db.Exec("truncate table person")
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>func (db *DB)Prepare(query string)(*Stmt, error)
+</li>
+</ul>
+<p>
+对SQL语句进行预处理,并返回*Stmt类型.Prepare方法主要用于对行重复性的操作,如循环插入10000条数据.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"database/sql"
+	"fmt"
+	_ "github.com/go-sql-driver/mysql"
+	"math/rand"
+	"time"
+)
+
+func main() {
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/sampledb?charset=utf8")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer db.Close()
+
+	var stmt *sql.Stmt
+	stmt, err = db.Prepare("insert into person(name, age, IsBoy) values(?,?,?)")
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("开始插入数据...", time.Now())
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i &lt; 10000; i++ {
+		_, err = stmt.Exec(fmt.Sprintf("张%d", r.Int()), r.Intn(50), r.Intn(100)%2)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
+	fmt.Println("数据插入完成...", time.Now())
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9-0-3" class="outline-4">
+<h4 id="sec-9-0-3"><span class="section-number-4">9.0.3</span> 事务</h4>
+<div class="outline-text-4" id="text-9-0-3">
+<p>
+事务是编程中最小的执行单元,它的代码要么全部成功,要么全部失败,不能部分成功/失败.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">func (db *DB)Begin() (*Tx, error) //开始一个事务
+func (tx *Tx)Commit() error  //提交事务
+func (tx *Tx)Rollback() error //回滚一个事务
+</pre>
+</div>
+<p>
+示例:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"database/sql"
+	"fmt"
+	_ "github.com/go-sql-driver/mysql"
+)
+
+func main() {
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/sampledb?charset=utf8")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	defer db.Close()
+	var trans *sql.Tx
+	trans, err = db.Begin()
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	_, err = trans.Exec("insert into person (name, age, IsBoy) values('张三',77, false)")
+	if err != nil {
+		trans.Rollback()
+	} else {
+		trans.Commit()
+	}
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> 反射</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-sec-10-0-1" class="outline-4">
+<h4 id="sec-10-0-1"><span class="section-number-4">10.0.1</span> 反射基础</h4>
+<div class="outline-text-4" id="text-10-0-1">
+<p>
+反射是审查元数据并收集关于它的类型信息的能力.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">func TypeOf(i interface{}) Type //返回i的类型信息,如果i为nil,返回nil,Type是一个接口
+</pre>
+</div>
+<p>
+Type接口定义
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">type Type interface{
+ Name() string 
+ PkgPath() string
+ ....
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-0-2" class="outline-4">
+<h4 id="sec-10-0-2"><span class="section-number-4">10.0.2</span> 反射调用函数</h4>
+<div class="outline-text-4" id="text-10-0-2">
+<p>
+TypeOf,ValueOf都可以对函数进行调用,区别在于,使用TypeOf时,函数的第一个参数是结构体本身,
+需要把结构体自身作为输入参数传递,而ValueOf不需要这样.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+type Student struct {
+	Name string
+	Age  int
+}
+
+func (this *Student) PrintName() {
+	fmt.Println(this.Name)
+}
+func (this *Student) GetAge() int {
+	return this.Age
+}
+
+func main() {
+	s := &amp;Student{Name: "abc", Age: 19}
+	rt := reflect.TypeOf(s)//如果是引用&amp;,会产生恐慌  
+	rv := reflect.ValueOf(s)//如果是引用&amp;,会产生恐慌
+	fmt.Println("Typeof 调用函数")
+	rtm, ok := rt.MethodByName("PrintName")
+	if ok {
+		var parm []reflect.Value
+		parm = append(parm, rv)
+		rtm.Func.Call(parm)
+	}
+	//valueof调用函数
+	fmt.Println("valueof调用函数")
+
+	rvm := rv.MethodByName("GetAge")
+	//用valueof调用函数时不需要把Struct本身作为参数传递过去
+	ret := rvm.Call(nil)
+	//显示返回值
+	fmt.Println("返回值")
+	ShowSlice(ret)
+}
+
+func ShowSlice(s []reflect.Value) {
+	if s != nil &amp;&amp; len(s) &gt; 0 {
+		for _, v := range s {
+			fmt.Println(v.Interface())
+		}
+	}
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-0-3" class="outline-4">
+<h4 id="sec-10-0-3"><span class="section-number-4">10.0.3</span> 反射取Struct的Tag信息</h4>
+<div class="outline-text-4" id="text-10-0-3">
+<p>
+可以对结构体进行反射时取tag附加信息.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	_ "encoding/json"
+	"fmt"
+	"reflect"
+)
+
+type Student struct {
+	Name string `json:"name"`
+	Age  int    `json:"age"`
+}
+
+func main() {
+	s := Student{Name: "aaa", Age: 19}
+	rt := reflect.TypeOf(s)
+	filedName, ok := rt.FieldByName("Name")
+	//取tag数据
+	if ok {
+		fmt.Println(filedName.Tag.Get("json"))
+	}
+	fileAge, ok := rt.FieldByName("Age")
+	if ok {
+		fmt.Println(fileAge.Tag.Get("json"))
+	}
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> 实现一个自己的ORM</h2>
+<div class="outline-text-2" id="text-11">
+</div><div id="outline-container-sec-11-0-1" class="outline-4">
+<h4 id="sec-11-0-1"><span class="section-number-4">11.0.1</span> 实现自己的ORM</h4>
+<div class="outline-text-4" id="text-11-0-1">
+<p>
+一个简单的orm,只实现Insert,Update,Delete,Load几个方法.
+通常向数据库插入数据时,只要Insert(model),不需要写SQL代码,
+model是struct结构体,在Insert的内部,利用反射,来取得结构体
+的名称做表名,结构体的字段作为数据表的字段名,结构体的字段值
+作为数据表的字段值,或者根据tag值来确定对应关系.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">type Person struct {
+	//TableName类型只是用来设置表名.如果结构体名跟表名相同可以忽略
+	TableName SimpleDb.TableName "person"
+	//PK用来设置是否主键
+	Id int `name:"id"PK:"true"Auto:"true"`
+	Name string "name" //对应表中的name值
+	Age int "age"
+	IsBoy bool
+	NotUse string "-"
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> TCP与UDP网络编程</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+一般的Socket编程模式:
+</p>
+<ol class="org-ol">
+<li>建立Socket: 使用Socket()函数 
+</li>
+<li>绑定Socket: 使用bind()函数 
+</li>
+<li>监听:使用listen(),或者连接connect()函数
+</li>
+<li>接受连接:使用accept()函数
+</li>
+<li>接收: 使用receive()函数,或者发送:使用send()函数 
+</li>
+</ol>
+
+<p>
+Go对此进行了抽象和包装.使用net.Dial()
+Dial()函数原型:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">func Dial(net, addr string) (Conn, error)
+
+几种常见协议的调用方式:
+TCP链接:
+conn, err := Dial("tcp", "192.168.0.1:8000")
+UDP链接:
+conn, err := Dial("udp", "192.168.0.1:8888")
+ICMP链接(使用协议名称):
+conn, err := Dial("ip4:icmp", "www.baidu.com") //-*-又给百度打广告了
+ICMP链接(使用协议编号):
+conn, err := Dial("ip4:1", "10.0.0.1")
+
+在连接成功后,可以进行数据的发送和接收.发送数据使用conn的Write()成员方法,
+接收数据使用Read()方法
+Dial()函数是对DialTCP() DialUDP() DialIP()和DialUnix()封装
++ func DialTCP(net string, laddr, raddr *TCPAddr) (c *TCPConn, err error)
++ func DialUDP(net string, laddr, raddr *UDPAddr) (c *UDPConn, err error)
++ func DialIP(netProto string, laddr, raddr *IPAddr) (c *IPConn, err error)
++ func DialUnix(net string, laddr, raddr *UnixAddr) (c *UnixConn, err error)
+尝试一下DialTCP
+#+BEGIN_SRC go -n
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net"
+	"os"
+)
+
+func main() {
+	if len(os.Args) &lt; 2 {
+		fmt.Fprintf(os.Stderr, "Usage: %s host:port", os.Args[0])
+		os.Exit(1)
+	}
+
+	service := os.Args[1]
+      //将service解析为服务地址端口
+	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
+	CheckError(err)
+	//链接,使用DialTCP()
+	conn, err := net.DialTCP("tcp", nil, tcpAddr)
+	CheckError(err)
+
+	_, err = conn.Write([]byte("HEAD / HTTP/1.0\r\n\r\n"))
+	CheckError(err)
+
+	result, err := ioutil.ReadAll(conn)
+	CheckError(err)
+
+	fmt.Println(string(result))
+	os.Exit(0)
+}
+
+func CheckError(err error) {
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Fatal error: %s", err.Error())
+		os.Exit(1)
+	}
+}
+</pre>
+</div>
+<p>
+运行结果:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">$ ./main www.baidu.com:80
+HTTP/1.1 200 OK
+Date: Thu, 10 Mar 2016 09:13:35 GMT
+Content-Type: text/html
+Content-Length: 14613
+Last-Modified: Tue, 02 Sep 2014 08:55:13 GMT
+Connection: Close
+Vary: Accept-Encoding
+Set-Cookie: BAIDUID=E5D3495E19089E6435FB758867023725:FG=1; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com
+Set-Cookie: BIDUPSID=E5D3495E19089E6435FB758867023725; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com
+Set-Cookie: PSTM=1457601215; expires=Thu, 31-Dec-37 23:55:55 GMT; max-age=2147483647; path=/; domain=.baidu.com
+Set-Cookie: BDSVRTM=0; path=/
+P3P: CP=" OTI DSP COR IVA OUR IND COM "
+Server: BWS/1.1
+X-UA-Compatible: IE=Edge,chrome=1
+Pragma: no-cache
+Cache-control: no-cache
+BDPAGETYPE: 1
+BDQID: 0xf54ec43500061668
+BDUSERID: 0
+Accept-Ranges: bytes
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-12-0-1" class="outline-4">
+<h4 id="sec-12-0-1"><span class="section-number-4">12.0.1</span> TCP编程</h4>
+<div class="outline-text-4" id="text-12-0-1">
+<p>
+TCP即传输控制协议/网间协议,是一种面向连接(连接导向)的,可靠的,
+基于字节流的一个端到端(Peer-to-Peer)的传输层协议.
+</p>
+
+<p>
+Go的net包提供了对Tcp操作的支持
+</p>
+<ul class="org-ul">
+<li>func InterfaceAddrs()([]Addr, error)返回本机的网络地址列表
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-go">// Package main provides ...
+package main
+
+import (
+	"fmt"
+	"net"
+)
+
+func main() {
+	addr, err := net.InterfaceAddrs()
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Println(addr)
+}
+</pre>
+</div>
+<ul class="org-ul">
+<li>func LookupIP(host string)(addrs []IP, err error)用来获取主机所对应的IP地址.
+</li>
+</ul>
+<p>
+IP是一个[]byte类型,用来表示一个IP地址. type IP []byte 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">// Package main provides ...
+package main
+
+import (
+	"fmt"
+	"net"
+)
+
+func main() {
+	ips, err := net.LookupIP("www.baidu.com")
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Println(ips)
+}
+</pre>
+</div>
+<ul class="org-ul">
+<li>func ResolveTCPAddr(net, addr string) (*TCPAddr, os.Error)
+</li>
+</ul>
+<p>
+该函数用来创建一个TCPAddr,第一个参数为:tcp/tcp4/tcp6,addr是一个字符串,
+由主机名或IP地址以及":"后端口号组成.TCPAddr定义:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">type TCPAddr struct {
+IP IP 
+Port int 
+}
+</pre>
+</div>
+<p>
+示例:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">// Package main provides ...
+package main
+
+import (
+	"fmt"
+	"net"
+)
+
+func main() {
+	ip, err := net.ResolveTCPAddr("tcp", "www.baidu.com:80")
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Println(ip)
+}
+</pre>
+</div>
+<ul class="org-ul">
+<li>func ListenTCP(net string, laddr *TCPAddr)(*TCPListener, error)
+</li>
+</ul>
+<p>
+TCP程序分为服务端和客户端.服务端程序在某一个端口监听客户端的链接请求,有客户端的连接请求时,
+读取客户端发来的数据,进行相关的处理,然后关闭链接.ListenTCP函数用于监听指定的端口,
+等待客户端的链接.
+</p>
+<ul class="org-ul">
+<li>func (l *TCPListener)AcceptTCP()(*TCPConn, error)
+</li>
+</ul>
+<p>
+用来接受客户端的请求,返回一个Conn链接,通过这个Conn来与客户端进行通信.
+</p>
+<ul class="org-ul">
+<li>func (l *TCPListener) Accept()(Conn, error)
+</li>
+</ul>
+<p>
+与AcceptTCP相同
+</p>
+<ul class="org-ul">
+<li>func (c *TCPConn)Write(b []byte)(int, error)
+</li>
+</ul>
+<p>
+向TCPConn网络链接发送数据,b是要发送的内容,返回值int为实际发送的字节数.
+</p>
+<ul class="org-ul">
+<li>func (c *TCPConn)Read(b []byte) (int, error)
+</li>
+</ul>
+<p>
+从TCPConn网络链接接收数据,返回值为实际接收的字节数,b是接收的数据.
+</p>
+<ul class="org-ul">
+<li>func DialTCP(net string,laddr, raddr *TCPAddr)(*TCPConn, error)
+</li>
+</ul>
+<p>
+用来链接远程服务器.net可以是tcp/tcp4/tcp6中的一个,Laddr为本地地址,通常为null,
+raddr链接的远程服务器地址.成功返回TCPConn,用返回的TCPConn可以向服务器发送消息,
+读取服务器的响应信息.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-12-0-2" class="outline-4">
+<h4 id="sec-12-0-2"><span class="section-number-4">12.0.2</span> TCP编程实战</h4>
+<div class="outline-text-4" id="text-12-0-2">
+<p>
+实现一个简单的程序,客户端向服务端发送ls列出当前目录下的文件,发送cd命令来改变当前目录.
+服务端收到客户端的命令后,进行相关的处理.并将结果发送给客户端.
+服务端:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"bytes"
+	"fmt"
+	"io/ioutil"
+	"net"
+	"os"
+)
+
+const (
+	LS  = "LS"
+	CD  = "CD"
+	PWD = "PWD"
+)
+
+func main() {
+	//转换地址
+	//监听7070端口
+	tcpAddr, err := net.ResolveTCPAddr("tcp", ":7070")
+	checkError(err)
+	listener, err := net.ListenTCP("tcp", tcpAddr)
+	checkError(err)
+	for {
+		//等待客户端链接
+		conn, err := listener.Accept()
+		if err != nil {
+			fmt.Println(err.Error())
+			continue
+		}
+		fmt.Println("收到客户端的请求")
+		go ServeClient(conn)
+	}
+}
+func ServeClient(conn net.Conn) {
+	defer conn.Close()
+	str := ReadData(conn)
+	if str == "" {
+		SendData(conn, "接收数据时出错")
+		return
+	}
+	fmt.Println("收到命令: ", str)
+	switch str {
+	case LS:
+		ListDir(conn)
+	case PWD:
+		Pwd(conn)
+	default:
+		if str[0:2] == CD {
+			Chdir(conn, str[3:])
+		} else {
+			SendData(conn, "命令错误")
+		}
+	}
+}
+
+//修改目录
+//使用os.Chdir
+func Chdir(conn net.Conn, s string) {
+	err := os.Chdir(s)
+	if err != nil {
+		SendData(conn, err.Error())
+	} else {
+		SendData(conn, "OK")
+	}
+}
+
+//列出当前目录下的文件
+func ListDir(conn net.Conn) {
+
+	files, err := ioutil.ReadDir(".")
+	if err != nil {
+		SendData(conn, err.Error())
+		return
+	}
+	var str string
+	for i, j := 0, len(files); i &lt; j; i++ {
+		f := files[i]
+		str += f.Name() + "\t"
+		if f.IsDir() {
+			str += "dir\r\n"
+		} else {
+			str += "file\r\n"
+		}
+	}
+	SendData(conn, str)
+}
+
+//读取数据
+func ReadData(conn net.Conn) string {
+	var data bytes.Buffer
+	var buf [512]byte
+	for {
+		n, err := conn.Read(buf[0:])
+		if err != nil {
+			fmt.Println(err)
+			return ""
+		}
+		if buf[n-1] == 0 {
+			data.Write(buf[0 : n-1])
+			break
+		} else {
+			data.Write(buf[0:n])
+		}
+	}
+	return string(data.Bytes())
+}
+
+//发送数据
+func SendData(conn net.Conn, data string) {
+	buf := []byte(data)
+	buf = append(buf, 0) //以0作为结束标记
+	_, err := conn.Write(buf)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+// Pwd
+func Pwd(conn net.Conn) {
+	s, err := os.Getwd()
+	if err != nil {
+		SendData(conn, err.Error())
+	} else {
+		SendData(conn, s)
+	}
+}
+func checkError(err error) {
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+}
+</pre>
+</div>
+<p>
+客户端 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"bufio"
+	"bytes"
+	"fmt"
+	"net"
+	"os"
+	"strings"
+)
+
+const (
+	LS   = "LS"
+	CD   = "CD"
+	PWD  = "PWD"
+	QUIT = "QUIT"
+)
+
+func main() {
+
+	reader := bufio.NewReader(os.Stdin)
+	for {
+		fmt.Println("请输入命令: ")
+		line, err := reader.ReadString('\n')
+		checkError(err)
+		//去掉两端的空格
+		line = strings.TrimSpace(line)
+		//转换为大写
+		line = strings.ToUpper(line)
+		//转化为数组
+		arr := strings.SplitN(line, " ", 2)
+		fmt.Println(arr)
+
+		switch arr[0] {
+		case LS:
+			SendRequest(LS)
+		case CD:
+			SendRequest(CD + " " + strings.TrimSpace(arr[1]))
+		case PWD:
+			SendRequest(PWD)
+		case QUIT:
+			fmt.Println("程序退出")
+			return
+		default:
+			fmt.Println("命令错误")
+		}
+	}
+}
+
+func SendRequest(cmd string) {
+	tcpAddr, err := net.ResolveTCPAddr("tcp", "127.0.0.1:7070")
+	checkError(err)
+	conn, err := net.DialTCP("tcp", nil, tcpAddr)
+	checkError(err)
+	SendData(conn, cmd)
+	fmt.Println(ReadData(conn))
+}
+
+//读取数据
+func ReadData(conn net.Conn) string {
+	var data bytes.Buffer
+	var buf [512]byte
+	for {
+		n, err := conn.Read(buf[0:])
+		if err != nil {
+			fmt.Println(err)
+			return ""
+		}
+		if buf[n-1] == 0 {
+			data.Write(buf[0 : n-1])
+			break
+		} else {
+			data.Write(buf[0:n])
+		}
+	}
+	return string(data.Bytes())
+}
+
+//发送数据
+func SendData(conn net.Conn, data string) {
+	buf := []byte(data)
+	buf = append(buf, 0) //以0作为结束标记
+	_, err := conn.Write(buf)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func checkError(err error) {
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+}
+</pre>
+</div>
+<p>
+TCP协议需要通信双方约定数据的传输格式,否则接收方无法判断是否接收完成.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-12-0-3" class="outline-4">
+<h4 id="sec-12-0-3"><span class="section-number-4">12.0.3</span> UDP网络编程</h4>
+<div class="outline-text-4" id="text-12-0-3">
+<p>
+UDP是用户数据报协议(User Datagram Protocol,UDP)的简称,UDP协议提供
+的是面向无连接的,不可靠的数据报传输服务.
+</p>
+<ul class="org-ul">
+<li>func ResolveUDPAddr(net, addr string)(*UDPAddr, error)
+</li>
+</ul>
+<p>
+解析addr字符串为UDPAddr地址，net是udp/udp4/udp6,
+</p>
+<ul class="org-ul">
+<li>func ListenUDP(net string laddr *UDPAddr)(*UDPConn, error)
+</li>
+</ul>
+<p>
+在指定的地址(laddr)监听,等待UDP数据包的到达.返回*UDPConn,
+可以使用连接的ReadFrom函数来读取UDP数据.用WriteTo来向客户端发送数据.
+</p>
+<ul class="org-ul">
+<li>func (c *UDPConn)ReadFrom(b []byte)(int, Addr, error)
+</li>
+</ul>
+<p>
+服务器用来读取UDP数据，Addr是发送的地址。
+</p>
+<ul class="org-ul">
+<li>func (c *UDPConn)WriteTo(b []byte, addr Addr)(int, error)
+</li>
+</ul>
+<p>
+向addr写入数据，b是要发送的内容，addr是接收的地址。
+</p>
+<ul class="org-ul">
+<li>func DialUDP(net string, laddr, raddr *UDPAddr) (*UDPConn, error)
+</li>
+</ul>
+<p>
+连接到远端服务器raddr，laddr通常为nil，如果不是nil，将使用laddr连接到服务端
+</p>
+<ul class="org-ul">
+<li>func (c *UDPConn) Write(b []byte)(int, error)
+</li>
+</ul>
+<p>
+用来向服务器发送数据
+</p>
+<ul class="org-ul">
+<li>func (c *UDPConn)ReadFromUDP(b []byte)(n int, addr *UDPAddr, err error)
+</li>
+</ul>
+<p>
+与ReadFrom相同，用来读取UDP数据
+</p>
+
+<p>
+实例：
+服务端：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"net"
+)
+
+func main() {
+	//转换地址
+	addr, err := net.ResolveUDPAddr("udp", ":7070")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	//监听7070端口
+	conn, err := net.ListenUDP("udp", addr)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	//循环读取数据
+	for {
+		var buf [1024]byte
+		n, caddr, err := conn.ReadFromUDP(buf[0:]) //返回的是客户端的地址
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		go HandleClient(conn, buf[0:n], caddr)
+	}
+}
+
+func HandleClient(conn *net.UDPConn, data []byte, addr *net.UDPAddr) {
+	fmt.Println("接收到的数据: " + string(data))
+	conn.WriteToUDP([]byte("OK, 数据以收到"), addr)
+}
+</pre>
+</div>
+<p>
+客户端:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"net"
+)
+
+func main() {
+	//转换地址
+	addr, err := net.ResolveUDPAddr("udp", "127.0.0.1:7070")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	//连接到服务端
+	conn, err := net.DialUDP("udp", nil, addr)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	defer conn.Close()
+
+	//简单写入数据
+	n, err := conn.Write([]byte("Hello Server"))
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	var buf [1024]byte
+	//读取数据,返回读取的字节长度, 远程地址, err;示例中不用到远程地址,_忽略
+	n, _, err = conn.ReadFromUDP(buf[0:])
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	fmt.Println(string(buf[0:n]))
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> WEB编程</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+Go语言标准库内建提供net/http包,蕴涵了HTTP客户端和服务端的具体实现.
+  HTTP客户端:net/http包的Client类型提供简单的实现方式:
+</p>
+<ul class="org-ul">
+<li>func (c *Client)Get(url string) (r *Response, err error)
+</li>
+<li>func (c *Client)Post(url string, bodyType string, body io.Reader)(r
+</li>
+</ul>
+<p>
+*Response, err error)
+</p>
+<ul class="org-ul">
+<li>func (c *Client)PostForm(url string, data url.Value) (r *Response, err
+error)
+</li>
+<li>func (c *Client)Head(url string) (r *Response, err error)
+</li>
+<li>func (c *Client)Do(req *Request) (resp *Response, err error)
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-13-0-1" class="outline-4">
+<h4 id="sec-13-0-1"><span class="section-number-4">13.0.1</span> web程序</h4>
+<div class="outline-text-4" id="text-13-0-1">
+<p>
+Go WEB程序以反向代理的方式发布.
+</p>
+<ul class="org-ul">
+<li>func HandleFunc(partten string, handler func(ResponseWrite, *Request))
+</li>
+</ul>
+<p>
+用来注册http路由的处理函数,partten是http的地址,handler是对应的处理函数.
+</p>
+<ul class="org-ul">
+<li>func ListenAndServe(addr string, handler Handler) error
+</li>
+</ul>
+<p>
+在指定端口监听HTTP请求,并阻塞程序,知道退出.
+示例:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/", HandleRequest)
+	http.ListenAndServe(":8888", nil)
+}
+
+func HandleRequest(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("&lt;h1&gt;第一个web程序&lt;/h1"))
+	w.Write([]byte(r.URL.Path))
+}
+</pre>
+</div>
+<p>
+编译运行,打开浏览器:<a href="http://127.0.0.1:8888/test">http://127.0.0.1:8888/test</a>
+</p>
+
+
+<div class="figure">
+<p><img src="./firstweb.png" alt="firstweb.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13-0-2" class="outline-4">
+<h4 id="sec-13-0-2"><span class="section-number-4">13.0.2</span> URL参数与Form表单处理</h4>
+<div class="outline-text-4" id="text-13-0-2">
+<p>
+http.Request.URL.Query()可以获取地址栏中的参数,返回Values类型,
+即map[string][]string
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/", HandleRequest)
+	http.ListenAndServe(":8888", nil)
+}
+
+func HandleRequest(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("&lt;h1&gt;第一个web程序&lt;/h1"))
+	w.Write([]byte("\n&lt;h1&gt;URL参数&lt;/h1&gt;"))
+	w.Write([]byte(fmt.Sprintf("%v", r.URL.Query())))
+	w.Write([]byte(r.URL.Path))
+}
+</pre>
+</div>
+<p>
+运行结果:
+</p>
+
+<p>
+<i>url.png</i>
+</p>
+
+<ul class="org-ul">
+<li>func (r *Request)ParseForm() error
+</li>
+</ul>
+<p>
+解析URL请求的参数并更新r.Form
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/", HandleRequest)
+	http.ListenAndServe(":8888", nil)
+}
+
+func HandleRequest(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", " text/html;charset=utf-8")
+	if "POST" == r.Method {
+		r.ParseForm()
+		//FormValue("username")默认取出的是第一个
+		w.Write([]byte("用户名: " + r.FormValue("username") + "&lt;br/&gt;"))
+		w.Write([]byte("&lt;hr/&gt;"))
+		names := r.Form["username"]
+		w.Write([]byte("username 有两个: " + fmt.Sprintf("%v", names)))
+		w.Write([]byte("&lt;hr/&gt;r.Form的内容: " + fmt.Sprintf("%v", r.Form)))
+		w.Write([]byte("&lt;hr/&gt;r.PostForm的内容: " + fmt.Sprintf("%v", r.Form)))
+	} else {
+		strBody := `&lt;form action="` + r.URL.RequestURI() + `" method="post"&gt;
+用户名: &lt;input name="username" type="text" /&gt;&lt;br/&gt;
+用户名: &lt;input name="username" type="text" /&gt;&lt;br/&gt;
+&lt;input type="submit" id="submit" value="submit"&gt;
+&lt;/form&gt;`
+		w.Write([]byte(strBody))
+		r.ParseForm()
+	}
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13-0-3" class="outline-4">
+<h4 id="sec-13-0-3"><span class="section-number-4">13.0.3</span> 文件上传</h4>
+<div class="outline-text-4" id="text-13-0-3">
+<p>
+Go的文件上传处理,Request.FormFile返回一个multipart.File对象,可以直接读取文件内容,并保存.
+</p>
+<ul class="org-ul">
+<li>func (r *Request)FormFile(key string)(multipart.File, *multipart.FileHeader, error)
+</li>
+</ul>
+<p>
+multipart.File是一个接口,继承io.Reader接口,通过该接口读取上传文件的内容.
+multipart.FileHeader是一个结构体,可以通过该结构体取到上传文件的名称,文件类型
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">type File interface {
+	io.Reader
+	io.ReaderAt
+	io.Seeker
+	io.Closer
+}
+type FileHeader struct {
+	Filename string
+	Header textproto.MIMEHeader
+	...
+}
+</pre>
+</div>
+<p>
+实例:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+)
+
+func HelloServer(w http.ResponseWriter, r *http.Request) {
+	if "POST" == r.Method {
+		file, handler, err := r.FormFile("file")
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+		fmt.Println(handler.Header)
+		defer file.Close()
+
+		f, err := os.OpenFile("./"+handler.Filename, os.O_WRONLY|os.O_CREATE, os.ModePerm)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+
+		defer f.Close()
+
+		size, err := io.Copy(f, file)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		fmt.Fprintf(w, "上传文件的大小为: %d", size)
+		return
+	}
+	w.Header().Add("Content-Type", "text/html;charset=utf-8")
+	w.WriteHeader(200)
+	html := `&lt;Form enctype="multipart/form-data" action="/" method="POST"&gt;
+请选择上传的文件: &lt;input name="file" type="file" /&gt;&lt;br/&gt;
+&lt;input type="submit" value="Upload File" /&gt;
+&lt;/form&gt;`
+
+	io.WriteString(w, html)
+}
+
+func main() {
+	http.HandleFunc("/", HelloServer)
+	err := http.ListenAndServe(":8888", nil)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13-0-4" class="outline-4">
+<h4 id="sec-13-0-4"><span class="section-number-4">13.0.4</span> HTML模板处理</h4>
+<div class="outline-text-4" id="text-13-0-4">
+<p>
+在html/template包中提供了Parse和Execute函数,parse用来解析模板,Execute用来将结果展示出来.
+</p>
+<ul class="org-ul">
+<li>func (t <b>Template) Parse(text string) (</b> Template, error)
+</li>
+</ul>
+<p>
+Text为要解析的模板内容,返回*Template对象,如果成功,error为nil.
+</p>
+<ul class="org-ul">
+<li>func (t *Template)Execute(wr io.Write,data interface{})(err error)
+</li>
+</ul>
+<p>
+将模板输出到wr中, data为向模板传递的数据.
+</p>
+<ul class="org-ul">
+<li>func (t *Template)ParseFile(filename &#x2026;string)(*Template, error)
+</li>
+</ul>
+<p>
+ParseFile创建一个新的Template对象,并对指定模板文件进行解析.
+示例:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"html/template"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/", HelloServer)
+	err := http.ListenAndServe(":8888", nil)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+
+func HelloServer(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("test.tpl") //解析test.tpl文件
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	err = t.Execute(w, nil) //执行,显示模板内容,没有参数,所以使用nil
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13-0-5" class="outline-4">
+<h4 id="sec-13-0-5"><span class="section-number-4">13.0.5</span> 模板基本语法</h4>
+<div class="outline-text-4" id="text-13-0-5">
+<ol class="org-ol">
+<li>变量 在模板中,使用{{和}}来输出变量到当前位置,如{{.}},{{.UserName}}
+</li>
+</ol>
+<p>
+示例:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"html/template"
+	"os"
+)
+
+func main() {
+	strTpl := "你好,{{.}}\n"
+	t, err := template.New("test").Parse(strTpl)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	strTpl2 := "姓名: {{.Name}}\n年龄: {{.Age}}\n"
+	user := make(map[string]interface{})
+	user["Name"] = "斌斌" //亲爱的儿子
+	user["Age"] = 1.5
+	t, err = template.New("test2").Parse(strTpl2)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	err = t.Execute(os.Stdout, user)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+</pre>
+</div>
+<ol class="org-ol">
+<li>if else条件
+</li>
+</ol>
+<p>
+在模板中if else条件语句格式:
+{{if pipeline}} T1 {{else}} TO {{end}}
+或
+{{if pipeline}} T1 {{end}}
+示例:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"html/template"
+	"os"
+)
+
+func main() {
+	strTpl := "{{if .IsLogin}} 已登录 {{else}} 请登录 {{end}}\n {{if .IsVip}} 贵宾 {{else}} 非贵宾 {{end}}\n"
+	data := make(map[string]bool)
+	data["IsLogin"] = true
+	t, err := template.New("test").Parse(strTpl)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	err = t.Execute(os.Stdout, data)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+</pre>
+</div>
+<ol class="org-ol">
+<li>range 在模板中可以使用range来取array,map,slice,channel中的值.
+</li>
+</ol>
+<p>
+格式如下
+{{range pipeline}} T1 {{end}}
+或
+{{range pipeline}} T1 {{else}} TO {{ end }}
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"html/template"
+	"os"
+)
+
+func main() {
+	strTpl := "{{range .test}} {{.}}\n{{end}} {{range .test1}} {{.}}\n {{else}} test1不存在 {{end}}\n"
+	data := make(map[string]interface{})
+	arr := []int{1, 2, 3, 4}
+	data["test"] = arr
+	t, err := template.New("test").Parse(strTpl)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	err = t.Execute(os.Stdout, data)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13-0-6" class="outline-4">
+<h4 id="sec-13-0-6"><span class="section-number-4">13.0.6</span> 模板函数</h4>
+<div class="outline-text-4" id="text-13-0-6">
+<p>
+Go提供了and,or,len等模板函数.
+使用示例:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go"><span class="linenr"> 1: </span>package main
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span>import (
+<span class="linenr"> 4: </span>	"fmt"
+<span class="linenr"> 5: </span>	"html/template"
+<span class="linenr"> 6: </span>	"os"
+<span class="linenr"> 7: </span>)
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>func main() {
+<span class="linenr">10: </span>	strTpl := "and a b结果为:{{and .a .b}}\nor a b结果为:{{or .a .b}}\n"
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>	data := make(map[string]bool)
+<span class="linenr">13: </span>	data["a"] = true
+<span class="linenr">14: </span>	data["b"] = false
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>	t, err := template.New("test").Parse(strTpl)
+<span class="linenr">17: </span>	if err != nil {
+<span class="linenr">18: </span>		fmt.Println(err.Error())
+<span class="linenr">19: </span>		return
+<span class="linenr">20: </span>	}
+<span class="linenr">21: </span>
+<span class="linenr">22: </span>	err = t.Execute(os.Stdout, data)
+<span class="linenr">23: </span>	if err != nil {
+<span class="linenr">24: </span>		fmt.Println(err)
+<span class="linenr">25: </span>	}
+<span class="linenr">26: </span>}
+</pre>
+</div>
+<p>
+Go提供了Funcs函数,用来设置自定义的模板函数
+</p>
+<ul class="org-ul">
+<li>func (t *Template)Funcs(funcMap FuncMap) *Template
+</li>
+<li>type FuncMap map[string]interface{}
+</li>
+</ul>
+<p>
+示例:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go">package main
+
+import (
+	"fmt"
+	"html/template"
+	"os"
+)
+
+func main() {
+	strTpl := "{{SayHello}}\n"
+	funcs := make(template.FuncMap)
+	funcs["SayHello"] = SayHello
+	t, err := template.New("test").Funcs(funcs).Parse(strTpl)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	err = t.Execute(os.Stdout, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func SayHello() string {
+	return "你好,自定义模板函数"
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> GUI编程</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+GoGUI编程使用的库：<a href="https://github.com/andlabs/ui">https://github.com/andlabs/ui</a>
+首先需要libui库：<a href="https://github.com/andlabs/libui">https://github.com/andlabs/libui</a>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">$ git clone https://github.com/andlabs/libui
+$ cd libui; make
+$ go get github.com/andlabs/ui
+</pre>
+</div>
+<p>
+将libui下的ui.h复制到$GOPATH/src/github.com/andlabs/ui目录下
+将out文件夹下的libui.so.0 libui.so 复制到自己项目目录下
+andlabs/ui示例:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-go"><span class="linenr"> 1: </span>//file: main.go
+<span class="linenr"> 2: </span>package main
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>import (
+<span class="linenr"> 5: </span>	"github.com/andlabs/ui"
+<span class="linenr"> 6: </span>)
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>func main() {
+<span class="linenr"> 9: </span>	err := ui.Main(func() {
+<span class="linenr">10: </span>		name := ui.NewEntry()
+<span class="linenr">11: </span>		button := ui.NewButton("Greet")
+<span class="linenr">12: </span>		greeting := ui.NewLabel("")
+<span class="linenr">13: </span>		box := ui.NewVerticalBox()
+<span class="linenr">14: </span>		box.Append(ui.NewLabel("Enter your name: "), false)
+<span class="linenr">15: </span>		box.Append(name, false)
+<span class="linenr">16: </span>		box.Append(button, false)
+<span class="linenr">17: </span>		box.Append(greeting, false)
+<span class="linenr">18: </span>		window := ui.NewWindow("Hello", 200, 100, false)
+<span class="linenr">19: </span>		window.SetChild(box)
+<span class="linenr">20: </span>		button.OnClicked(func(*ui.Button) {
+<span class="linenr">21: </span>			greeting.SetText("Hello, " + name.Text() + "!")
+<span class="linenr">22: </span>		})
+<span class="linenr">23: </span>		window.OnClosing(func(*ui.Window) bool {
+<span class="linenr">24: </span>			ui.Quit()
+<span class="linenr">25: </span>			return true
+<span class="linenr">26: </span>		})
+<span class="linenr">27: </span>		window.Show()
+<span class="linenr">28: </span>	})
+<span class="linenr">29: </span>
+<span class="linenr">30: </span>	if err != nil {
+<span class="linenr">31: </span>		panic(err)
+<span class="linenr">32: </span>	}
+<span class="linenr">33: </span>}
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre class="src src-shell">$ go build main.go
+$ ./main
+</pre>
+</div>
+
+<div class="figure">
+<p><img src="./gui.png" alt="gui.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p>DEFINITION NOT FOUND.</p></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Author: 龙小懒</p>
+<p class="date">Created: 2016-03-10 四 18:29</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

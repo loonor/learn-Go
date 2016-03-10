@@ -12,7 +12,7 @@
 - [[#实现一个自己的orm][实现一个自己的ORM]]
 - [[#tcp与udp网络编程][TCP与UDP网络编程]]
 - [[#web编程][WEB编程]]
-  
+- [[#GUI编程][GUI编程]] 
 * GO语言基础
 *** 第一个Go程序
     #+begin_src go
@@ -1385,7 +1385,7 @@ Dial()函数是对DialTCP() DialUDP() DialIP()和DialUnix()封装
 + func DialIP(netProto string, laddr, raddr *IPAddr) (c *IPConn, err error)
 + func DialUnix(net string, laddr, raddr *UnixAddr) (c *UnixConn, err error)
 尝试一下DialTCP
-#+BEGIN_SRC Go -n -r
+#+BEGIN_SRC go -n
 package main
 
 import (
@@ -1402,7 +1402,7 @@ func main() {
 	}
 
 	service := os.Args[1]
-	//将service
+      //将service解析为服务地址端口
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
 	CheckError(err)
 	//链接,使用DialTCP()
@@ -1885,6 +1885,16 @@ func main() {
 #+END_SRC
 
 * WEB编程
+Go语言标准库内建提供net/http包,蕴涵了HTTP客户端和服务端的具体实现.
+  HTTP客户端:net/http包的Client类型提供简单的实现方式:
+  + func (c *Client)Get(url string) (r *Response, err error)
+  + func (c *Client)Post(url string, bodyType string, body io.Reader)(r
+  *Response, err error)
+  * func (c *Client)PostForm(url string, data url.Value) (r *Response, err
+    error)
+  * func (c *Client)Head(url string) (r *Response, err error)
+  * func (c *Client)Do(req *Request) (resp *Response, err error)
+
 *** web程序
 Go WEB程序以反向代理的方式发布.
 + func HandleFunc(partten string, handler func(ResponseWrite, *Request))
@@ -2190,7 +2200,7 @@ func main() {
 *** 模板函数
 Go提供了and,or,len等模板函数.
 使用示例:
-#+BEGIN_SRC go
+#+BEGIN_SRC go -n
 package main
 
 import (
