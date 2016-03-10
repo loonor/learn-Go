@@ -12,7 +12,7 @@
 - [[#实现一个自己的orm][实现一个自己的ORM]]
 - [[#tcp与udp网络编程][TCP与UDP网络编程]]
 - [[#web编程][WEB编程]]
-- [[#GUI编程][GUI编程]] 
+- [[#gui编程][GUI编程]] 
 * GO语言基础
 *** 第一个Go程序
     #+begin_src go
