@@ -10,7 +10,7 @@
 - [[#mysql数据库操作][MySQL数据库操作]]
 - [[#反射][反射]]
 - [[#实现一个自己的orm][实现一个自己的ORM]]
-- [[#tcp与udp网络编程][TCP与UDP网络编程]]
+- [[#网络编程][网络编程]]
 - [[#web编程][WEB编程]]
 - [[#gui编程][GUI编程]] 
 * GO语言基础
@@ -1354,7 +1354,7 @@ type Person struct {
 }
 #+END_SRC
 
-* TCP与UDP网络编程
+* 网络编程
 一般的Socket编程模式:
 1) 建立Socket: 使用Socket()函数 
 2) 绑定Socket: 使用bind()函数 
@@ -1884,6 +1884,22 @@ func main() {
 
 #+END_SRC
 
+*** RPC编程
+    RPC(remote Procedure Call,远程过程调用)是一种通过网络从远程计算机程序上请求服务,
+    构建于TCP/UDP,或者HTTP之上,允许开发者直接调用另一台计算机上的程序.
+    采用Client/Server工作模式.Go标准库提供了net/rpc包实现了RPC协议的相关细节.
+    RPC服务端可供远程访问条件:
+    + [X] 必须是在对象对外部可公开调用的方法(首字母大写) 
+    + [X] 必须有两个参数,且参数的类型都必须是包外部可以访问的类型或者是Go内建支持的类型.
+    + [ ] 第二个参数必须是一个指针
+    + [ ] 方法必须返回一个error类型的值.
+    + [ ] func (t *T) MethodName(argType T1, replyType *T2) error
+          类型T T1 T2默认使用Go内置encoding/gob包进行编码解码.
+          方法第一个参数表示由RPC客户端传入的参数,第二个参数表示
+          要返回给RPC客户端的结果
+
+    RPC服务端可以通过调用rpc.ServeConn处理单个连接请求,多数情况通过TCP或HTTP在某个网络地址上进行监听.
+RPC客户端:通过Go的net/rpc包提供的rpc.Dial()和rpc.DialHTTP()方法来与指定的RPC服务端建立连接.
 * WEB编程
 Go语言标准库内建提供net/http包,蕴涵了HTTP客户端和服务端的具体实现.
   HTTP客户端:net/http包的Client类型提供简单的实现方式:
@@ -1894,7 +1910,57 @@ Go语言标准库内建提供net/http包,蕴涵了HTTP客户端和服务端的�
     error)
   * func (c *Client)Head(url string) (r *Response, err error)
   * func (c *Client)Do(req *Request) (resp *Response, err error)
-
+- http.Get()
+  请求一个资源,只需调用http.Get()方法(等价于http.DefaultClient.Get()):
+  #+begin_src go
+  resp, err := http.Get("http://example.com/")
+  if err != nil {
+      //错误处理
+      return 
+  }
+  defer resp.Body.close()
+  io.Copy(os.Stdout, resp.Body)
+  #+end_src
+- http.Post()
+  以POST方式发送数据,http.Post()需要3个参数:
+  - [X] 请求的目标URL
+  - [] 将要POST数据的资源类型
+  - [X] 数据的比特流([]byte)
+#+begin_src go -n -r
+        //图片上传
+resp, err := http.Post("http://example.com/upload",
+        "image/jpeg",&imageDataBuf)
+        if err != nil {
+        //错误处理
+            return
+        }
+        if resp.StatusCode != http.StatusOk {
+            //错误处理
+            return 
+        }
+        ...
+#+end_src 
+- http.PostForm() 
+  实现了标准编码格式为application/x-www-form-urlencoded的表单提交
+  #+begin_src go
+  resp, err := http.PostFrom("http://example.com/posts",
+  url.Value{"title":{"article title"}, "content":{"article body"}})
+  if err != nil {
+      //错误处理
+      return
+  }
+  ...
+  #+end_src
+- http.Head()
+  请求目标URL的头部信息.
+  #+begin_src go
+  resp, err := http.Head("http://example.com")
+  if err != nil {
+      //错误处理
+      return
+  }
+  ...
+  #+end_src
 *** web程序
 Go WEB程序以反向代理的方式发布.
 + func HandleFunc(partten string, handler func(ResponseWrite, *Request))
